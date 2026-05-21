@@ -1,7 +1,9 @@
 <div align="center">
   
   # BOS-FS
- </div>
+  <img width=30% height=30% alt="42e644be-c1b3-422b-b246-2d8418d56e4f" src="https://github.com/user-attachments/assets/c2f58bb0-f4fa-4ab5-ae94-887b468eb11f" />
+
+</div>
 <p align="center">
 
   <img src="https://img.shields.io/badge/version-v0.0.6-blue" alt="Version" />
