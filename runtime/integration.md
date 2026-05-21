@@ -32,3 +32,83 @@ result = llm.chat(system_prompt=system_prompt, user_input=project_description)
 # Step 3: Parse output
 parsed = json.loads(result)
 ```
+
+## Claude Code Integration
+
+### Method 1: Skill Reference
+Place Skill files in a project directory and reference via `@`:
+```
+@skills/pipeline.md
+```
+
+### Method 2: Claude Desktop Config
+Add BOS-FS skills to Claude Desktop's custom instructions:
+1. Read each Skill .md file
+2. Add content to Claude Desktop settings → Custom Instructions
+3. Use the pipeline prompt for full workflow
+
+### Method 3: API Integration
+```python
+import anthropic
+
+def bosfs_pipeline(project_description):
+    with open("skills/pipeline.md") as f:
+        system_prompt = f.read()
+    
+    client = anthropic.Anthropic()
+    result = client.messages.create(
+        model="claude-sonnet-4-20250514",
+        system=system_prompt,
+        messages=[{"role": "user", "content": project_description}],
+        max_tokens=8192
+    )
+    return result.content[0].text
+```
+
+## OpenDevin Integration
+
+### Setup
+Copy BOS-FS `skills/` directory to OpenDevin's skills path.
+
+### Usage
+In OpenDevin agent configuration:
+```json
+{
+  "skills": [
+    {"name": "bos-fs", "path": "skills/", "pipeline": "pipeline.md"}
+  ]
+}
+```
+
+### Execution Flow
+OpenDevin will use BOS-FS Skills during:
+- Repository analysis phase → Goal Refiner
+- Documentation generation → README Refactor
+- Pre-submission check → Reviewer Simulator
+
+## GitHub Copilot Integration
+
+### Method 1: Copilot Chat
+Reference Skill files in Copilot Chat:
+```
+#file:skills/pipeline.md
+Optimize my project: [project description]
+```
+
+### Method 2: Copilot Custom Instructions
+Add BOS-FS principles to GitHub Copilot custom instructions:
+```
+When helping with project documentation:
+1. Use BOS-FS What/Why/How/Result/Next structure
+2. Apply value formula: technology × user × benefit
+3. Simulate reviewer feedback before finalizing
+```
+
+### Method 3: VS Code Extension
+Create `.github/copilot-instructions.md` in project root:
+```markdown
+Use BOS-FS Skill system for project optimization:
+- Load skills/pipeline.md for full workflow
+- Use individual skills for specific tasks
+- Follow Submission Engineering principles
+```
