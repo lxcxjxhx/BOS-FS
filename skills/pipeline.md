@@ -1,72 +1,37 @@
 # BOS-FS Pipeline Orchestrator
+> Context: [base_context](../knowledge/base_context.md)
 
 ## Role
-你是 BOS-FS 流水线的统一编排器，负责串联六大 Skill 完成完整的项目优化流程。
+串联六大 Skill 完成完整项目优化。
 
-## Pipeline Flow
+## Pipeline
 ```
 Repo/描述 → Understand → Map → Refactor → Review → Build → Submit
               ↓              ↓        ↓         ↓        ↓
-           Goal Refiner   Outcome  README    Reviewer  Submission
+          Goal Refiner   Outcome   README    Reviewer  Submission
                           Mapper   Refactor  Simulator Builder
 ```
 
-## Activation
-当用户提供项目描述或仓库信息时自动激活。
+## Steps
+| Step | Stage | Skill | 输入 | 输出 |
+|------|-------|-------|------|------|
+| 1 | Understand | Goal Refiner | 项目描述 | {persona,problem,solution,outcome} |
+| 2 | Map | Outcome Mapper | 特性列表 | Feature→Capability→Outcome |
+| 3 | Refactor | README Refactor | 原始README | What/Why/How/Result/Next |
+| 4 | Review | Reviewer Simulator | 项目信息 | 通过概率/拒绝理由/建议 |
+| 5 | Build | Submission Builder | 项目信息 | 完整提交包 |
+| 6 | Analyze | Reject Analyzer | 拒绝原因 | 真实问题/修复建议(按需) |
 
-## Execution Steps
-
-### Step 1: Understand
-调用 Goal Refiner，从项目描述中提取：
-- persona（目标用户）
-- problem（核心问题）
-- solution（解决方案）
-- outcome（预期结果）
-
-### Step 2: Map
-调用 Outcome Mapper，将项目特性转换为价值主张：
-- Feature → Capability → Outcome
-
-### Step 3: Refactor
-调用 README Refactor，重构项目文档：
-- What/Why/How/Result/Next 结构
-- 价值公式：技术 × 用户 × 收益
-
-### Step 4: Review
-调用 Reviewer Simulator，模拟四类评审：
-- technical（技术评审）
-- investment（投资评审）
-- product（产品评审）
-- opensource（开源评审）
-
-### Step 5: Build
-调用 Submission Builder，构建完整提交包：
-- README.md
-- demo_guide.md
-- pitch.md
-- FAQ.md
-- risk_disclosure.md
-
-### Step 6: Analyze（按需）
-如果评审通过率 < 50%，调用 Reject Analyzer 分析原因并给出修复建议。
+## Shortcut
+| 命令 | 步骤 |
+|------|------|
+| 完整优化 | Step 1-5 |
+| 快速预览 | Step 1-2 |
+| 仅文档 | Step 3 |
+| 仅评审 | Step 4 |
+| 拒绝分析 | Step 6 |
 
 ## Output
 ```json
-{
-  "pipeline_result": {
-    "goal": {},
-    "outcomes": [],
-    "readme": "",
-    "reviews": {},
-    "bundle": {},
-    "status": "complete|needs_revision"
-  }
-}
+{"pipeline_result":{"goal":{},"outcomes":[],"readme":"","reviews":{},"bundle":{},"status":"complete|needs_revision"}}
 ```
-
-## Shortcut Commands
-- `完整优化`: 执行 Step 1-5
-- `快速预览`: 仅执行 Step 1-2
-- `仅文档`: 执行 Step 3
-- `仅评审`: 执行 Step 4
-- `拒绝分析`: 执行 Step 6
