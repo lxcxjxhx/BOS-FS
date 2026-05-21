@@ -1,0 +1,85 @@
+{
+  "name": "BOS-FS",
+  "version": "1.0.0",
+  "description": "Submission Engineering Runtime - 将生成、表达、审核、交付串联成统一 Skill Runtime",
+  "tagline": "Build · Optimize · Submit",
+  "author": "HOS(安全风信子)",
+  "category": "submission_engineering",
+  "skills": [
+    {
+      "id": "goal_refiner",
+      "name": "Goal Refiner",
+      "description": "提炼项目意图，从自然语言描述中提取 persona/problem/solution/outcome",
+      "file": "skills/01_goal_refiner.md",
+      "input": "项目描述（自然语言）",
+      "output": "JSON: {persona, problem, solution, outcome}",
+      "trigger": "用户描述项目、需要明确目标时"
+    },
+    {
+      "id": "reviewer_simulator",
+      "name": "Reviewer Simulator",
+      "description": "模拟技术/投资/产品/开源四种评审角色，输出通过概率、拒绝理由、补充建议",
+      "file": "skills/02_reviewer_simulator.md",
+      "input": "项目信息（结构化的 persona/problem/solution/outcome）",
+      "output": "JSON: {pass_probability, rejection_reasons, suggestions}",
+      "trigger": "需要预审项目、评估通过率时"
+    },
+    {
+      "id": "readme_refactor",
+      "name": "README Refactor",
+      "description": "重构 README 为 What/Why/How/Result/Next 结构，内置价值提炼公式",
+      "file": "skills/03_readme_refactor.md",
+      "input": "原始 README 或仓库信息",
+      "output": "重构后的 README 文本",
+      "trigger": "需要优化项目文档、提高可理解度时"
+    },
+    {
+      "id": "outcome_mapper",
+      "name": "Outcome Mapper",
+      "description": "Feature → Capability → Outcome 价值转换",
+      "file": "skills/04_outcome_mapper.md",
+      "input": "Feature 描述",
+      "output": "JSON: {feature, capability, outcome}",
+      "trigger": "需要将技术表达转换为用户价值时"
+    },
+    {
+      "id": "submission_builder",
+      "name": "Submission Builder",
+      "description": "构建完整提交包，包含 README/Demo/FAQ/风险说明",
+      "file": "skills/05_submission_builder.md",
+      "input": "项目信息（goal + readme + outcomes）",
+      "output": "submission_bundle 目录结构指导",
+      "trigger": "需要准备提交材料、发布项目时"
+    },
+    {
+      "id": "reject_analyzer",
+      "name": "Reject Analyzer",
+      "description": "分析拒绝原因，提取真实问题，给出修复建议",
+      "file": "skills/06_reject_analyzer.md",
+      "input": "拒绝原因文本",
+      "output": "JSON: {real_issue, fixable_items, resubmit_suggestion}",
+      "trigger": "项目被拒、需要分析原因并重投时"
+    }
+  ],
+  "pipeline": {
+    "stages": [
+      {"name": "Understand", "skill": "goal_refiner", "description": "理解项目意图"},
+      {"name": "Map", "skill": "outcome_mapper", "description": "映射价值主张"},
+      {"name": "Refactor", "skill": "readme_refactor", "description": "重构项目文档"},
+      {"name": "Review", "skill": "reviewer_simulator", "description": "模拟评审预审"},
+      {"name": "Build", "skill": "submission_builder", "description": "构建提交包"},
+      {"name": "Analyze", "skill": "reject_analyzer", "description": "分析拒绝原因（按需）"}
+    ],
+    "flow": "Repo → Understand → Optimize → Review → Package → Submit"
+  },
+  "principles": {
+    "dont": ["伪造成果", "伪造用户", "伪造数据", "夸大能力", "规避规则"],
+    "do": ["明确目标", "补齐交付", "重构描述", "对齐评审语言"]
+  },
+  "integrations": {
+    "cursor": "将 skills/ 目录 .md 文件添加到 .cursorrules",
+    "trae": "将 Skill 文件放入 .trae/skills/ 目录",
+    "openhands": "通过 skills/ 目录加载对应 Skill 提示词",
+    "generic_llm": "读取对应 Skill .md 文件作为 system prompt"
+  }
+}
