@@ -1,7 +1,7 @@
-<p align="center">
+<div align="center">
   
   # BOS-FS
-</p>
+ </div>
 <p align="center">
 
   <img src="https://img.shields.io/badge/version-v0.0.5-blue" alt="Version" />
