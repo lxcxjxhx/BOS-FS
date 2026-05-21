@@ -4,9 +4,13 @@
  </div>
 <p align="center">
 
-  <img src="https://img.shields.io/badge/version-v0.0.5-blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-v0.0.6-blue" alt="Version" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License" />
   <img src="https://img.shields.io/badge/status-Production Ready-brightgreen" alt="Status" />
+</p>
+
+<p align="center">
+  <strong>Submission Engineering Runtime</strong> · Build · Optimize · Submit
 </p>
 
 <p align="center">
@@ -119,6 +123,7 @@ A: 参见 [guides/integration.md](guides/integration.md)。
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| **v0.0.6** | 2026-05-21 | 集成指南合并、评分文件清理、Skill目录精简、模板格式增强 |
 | **v0.0.5** | 2026-05-21 | Skill文件压缩、Knowledge库合并(竞品分析+差异化)、评分标准统一、模板精简 |
 | **v0.0.4** | 2026-05-21 | README高密度化、集成指南合并、元数据精简 |
 | **v0.0.3** | 2026-05-21 | Skill Token优化(~55%压缩)、.trae/目录去重、公共上下文提取 |
