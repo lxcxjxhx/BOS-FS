@@ -2,7 +2,7 @@
 ## 核心组件
 - [ ] README.md（What/Why/How/Result/Next）
 - [ ] demo_guide.md（安装→配置→运行→验证）
-- [ ] pitch.md（一句话→问题→方案→指标→路线图）
+- [ ] introduction.md（一句话→问题→方案→指标→路线图）
 - [ ] FAQ.md（5-10个问答）
 - [ ] risk_disclosure.md（技术/市场/合规风险）
 - [ ] bundle_meta.json（元数据）

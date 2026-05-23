@@ -1,0 +1,32 @@
+{
+  "project_name": "BOS-FS",
+  "version": "1.0.0",
+  "tagline": "标准化项目交付与提交文档自动化平台",
+  "description": "BOS-FS 是一套面向企业级项目的自动化交付文档生成系统，整合需求分析、代码审查、质量评估、提交包构建等全链路环节。",
+  "target_users": "项目经理、交付工程师、研发团队、QA 人员",
+  "tech_stack": [
+    "Python 3.9+",
+    "Markdown",
+    "JSON",
+    "Git"
+  ],
+  "features": [
+    "一键生成 8 组件标准化提交文档包",
+    "审核拒绝原因自动分析与修复建议",
+    "模块化可扩展架构，支持自定义模板",
+    "全局一致性自动校验",
+    "开箱即用的演示与安装指南"
+  ],
+  "components": [
+    "README.md",
+    "demo_guide.md",
+    "introduction.md",
+    "screenshots_guide.md",
+    "FAQ.md",
+    "risk_disclosure.md",
+    "trust_statement.md",
+    "bundle_meta.json"
+  ],
+  "generated_at": "2026-05-23T11:08:48.461306",
+  "builder_version": "1.0.0"
+}

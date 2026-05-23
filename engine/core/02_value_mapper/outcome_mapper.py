@@ -1,129 +1,127 @@
-"""成果映射引擎 — 将技术特性转换为业务能力与业务成果。"""
+"""Outcome Mapper - Convert technical Features to user Capabilities and Outcomes."""
 
-from __future__ import annotations
-
-
-# ────────────────────── 转换规则库 ──────────────────────
-
-FEATURE_RULES: dict[str, str] = {
-    "ai workflow": "AI Workflow",
-    "模型调度": "模型调度",
-    "多模型支持": "多模型支持",
-    "automated pipeline": "自动化流水线",
-    "ci/cd": "CI/CD 集成",
-    "code review": "代码审查",
-    "test generation": "测试用例生成",
-    "智能路由": "智能路由",
-    "缓存优化": "缓存优化",
-    "灰度发布": "灰度发布",
-    "a/b test": "A/B 测试",
-    "数据分析": "数据分析平台",
-    "自动化部署": "自动化部署",
-    "监控告警": "监控告警",
-    "日志聚合": "日志聚合",
-}
-
-CAPABILITY_RULES: dict[str, str] = {
-    "AI Workflow": "交付自动化平台",
-    "模型调度": "降低交付成本",
-    "多模型支持": "减少重复配置与上下文切换",
-    "自动化流水线": "端到端交付加速",
-    "CI/CD 集成": "发布频率提升",
-    "代码审查": "代码质量保障",
-    "测试用例生成": "测试覆盖率提升",
-    "智能路由": "流量调度优化",
-    "缓存优化": "响应延迟降低",
-    "灰度发布": "风险控制能力",
-    "A/B 测试": "数据驱动决策",
-    "数据分析平台": "业务洞察自动化",
-    "自动化部署": "运维成本降低",
-    "监控告警": "故障响应速度提升",
-    "日志聚合": "问题定位效率提升",
-}
-
-OUTCOME_RULES: dict[str, str] = {
-    "交付自动化平台": "交付周期缩短 60%，人工干预减少 80%",
-    "降低交付成本": "单次交付成本下降 40%",
-    "减少重复配置与上下文切换": "开发者效率提升 30%",
-    "端到端交付加速": "从代码提交到上线时间缩短 50%",
-    "发布频率提升": "每日可发布次数提升 3x",
-    "代码质量保障": "线上缺陷率降低 35%",
-    "测试覆盖率提升": "回归测试时间减少 70%",
-    "流量调度优化": "系统吞吐量提升 25%",
-    "响应延迟降低": "P99 延迟下降 50%",
-    "风险控制能力": "故障影响范围缩小 80%",
-    "数据驱动决策": "实验迭代周期缩短 60%",
-    "业务洞察自动化": "决策响应时间从天级降至分钟级",
-    "运维成本降低": "运维人力投入减少 50%",
-    "故障响应速度提升": "MTTR 降低 65%",
-    "问题定位效率提升": "排查时间从小时级降至分钟级",
-}
+import re
+from typing import Dict, List, Optional
 
 
 class OutcomeMapper:
-    """Feature → Capability → Outcome 转换器。
+    """Converts technical features to user-facing capabilities and measurable outcomes."""
 
-    将底层技术特性翻译为业务方能理解的成果描述。
-    """
+    CONVERSION_RULES = [
+        # AI 类别
+        {"category": "AI", "feature": "AI Workflow", "capability": "交付自动化平台", "outcome": "交付周期缩短60%"},
+        {"category": "AI", "feature": "多模型调度", "capability": "智能资源分配", "outcome": "减少重复配置"},
+        {"category": "AI", "feature": "RAG", "capability": "知识增强", "outcome": "回答准确率提升40%"},
+        {"category": "AI", "feature": "Agent协作", "capability": "多智能体编排", "outcome": "复杂任务并行执行"},
+        {"category": "AI", "feature": "Function Calling", "capability": "工具调用自动化", "outcome": "减少手动API集成"},
 
-    def map_feature_to_outcome(self, feature: str) -> dict[str, str]:
-        """将技术特性映射到能力与成果。
+        # DevOps 类别
+        {"category": "DevOps", "feature": "CI/CD", "capability": "交付流水线", "outcome": "发布频率提升3倍"},
+        {"category": "DevOps", "feature": "自动测试", "capability": "质量保障自动化", "outcome": "回归成本降低60%"},
+        {"category": "DevOps", "feature": "代码生成", "capability": "开发加速", "outcome": "编码时间减少40%"},
+        {"category": "DevOps", "feature": "容器化", "capability": "环境标准化", "outcome": "部署一致性100%"},
+
+        # Product 类别
+        {"category": "Product", "feature": "文档自动化", "capability": "知识沉淀", "outcome": "文档维护成本降低70%"},
+        {"category": "Product", "feature": "权限管理", "capability": "访问控制", "outcome": "安全合规100%"},
+        {"category": "Product", "feature": "数据可视化", "capability": "洞察呈现", "outcome": "决策效率提升50%"},
+    ]
+
+    def map_feature(self, feature: str) -> Dict[str, str]:
+        """Convert a single technical feature to capability and outcome.
 
         Args:
-            feature: 技术特性描述，如 "AI Workflow"、"模型调度" 等。
+            feature: Technical feature description.
 
         Returns:
-            {"feature": str, "capability": str, "outcome": str}
+            Dict with keys: feature, capability, outcome.
         """
-        normalized = feature.strip()
-        capability = self._lookup_capability(normalized)
-        outcome = self._lookup_outcome(capability)
+        text = feature.strip()
 
+        if not text:
+            return {
+                "feature": "",
+                "capability": "未明确",
+                "outcome": "未明确",
+            }
+
+        match = self._find_match(text)
+        if match:
+            return {
+                "feature": text,
+                "capability": match["capability"],
+                "outcome": match["outcome"],
+            }
+
+        return self._generic_conversion(text)
+
+    def map_features(self, features: List[str]) -> Dict[str, List[Dict[str, str]]]:
+        """Convert multiple technical features to capabilities and outcomes.
+
+        Args:
+            features: List of technical feature descriptions.
+
+        Returns:
+            Dict with key 'features' containing a list of mapped results.
+        """
+        if not features:
+            return {"features": []}
+
+        mapped = [self.map_feature(f) for f in features]
+        return {"features": mapped}
+
+    def _find_match(self, feature: str) -> Optional[Dict[str, str]]:
+        """Find the best matching rule from the conversion rules database."""
+        # Exact match
+        for rule in self.CONVERSION_RULES:
+            if rule["feature"].lower() == feature.lower():
+                return rule
+
+        # Fuzzy match using regex
+        for rule in self.CONVERSION_RULES:
+            pattern = re.compile(re.escape(rule["feature"]), re.IGNORECASE)
+            if pattern.search(feature):
+                return rule
+
+        return None
+
+    def _generic_conversion(self, feature: str) -> Dict[str, str]:
+        """Fallback generic conversion when no rule matches.
+
+        Args:
+            feature: Technical feature that has no matching rule.
+
+        Returns:
+            Dict with generic capability and outcome based on the feature.
+        """
         return {
-            "feature": normalized,
-            "capability": capability,
-            "outcome": outcome,
+            "feature": feature,
+            "capability": f"让用户{feature}",
+            "outcome": f"提升{feature}相关效率",
         }
-
-    @staticmethod
-    def _lookup_capability(feature: str) -> str:
-        """查找能力层描述。"""
-        # 精确匹配
-        if feature in CAPABILITY_RULES:
-            return CAPABILITY_RULES[feature]
-        # 通过 feature 别名匹配
-        for alias, canonical in FEATURE_RULES.items():
-            if alias in feature.lower():
-                return CAPABILITY_RULES.get(canonical, feature)
-        # 兜底
-        return feature
-
-    @staticmethod
-    def _lookup_outcome(capability: str) -> str:
-        """查找成果描述。"""
-        if capability in OUTCOME_RULES:
-            return OUTCOME_RULES[capability]
-        # 模糊匹配
-        for key, value in OUTCOME_RULES.items():
-            if key in capability:
-                return value
-        return "效率与质量双提升"
 
 
 if __name__ == "__main__":
     mapper = OutcomeMapper()
 
-    test_cases = [
-        "AI Workflow",
-        "模型调度",
-        "多模型支持",
-        "ci/cd",
-        "缓存优化",
-        "unknown_feature",
-    ]
+    # Single feature conversion
+    print("=== Single Feature Conversion ===")
+    result = mapper.map_feature("多模型调度")
+    print(f"Input: 多模型调度")
+    print(f"Output: {result}")
+    print()
 
-    print(f"{'技术特性':<20} {'业务能力':<25} {'业务成果'}")
-    print("-" * 80)
-    for feat in test_cases:
-        result = mapper.map_feature_to_outcome(feat)
-        print(f"{result['feature']:<20} {result['capability']:<25} {result['outcome']}")
+    # Multiple features conversion
+    print("=== Multiple Features Conversion ===")
+    sample_features = ["AI Workflow", "自动测试", "CI/CD"]
+    result = mapper.map_features(sample_features)
+
+    import json
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print()
+
+    # Generic conversion (no rule match)
+    print("=== Generic Conversion (Fallback) ===")
+    result = mapper.map_feature("实时数据同步")
+    print(f"Input: 实时数据同步")
+    print(f"Output: {result}")

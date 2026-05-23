@@ -170,8 +170,8 @@
 ## Examples
 ```
 Input: {"persona":"开发者","problem":"多模型切换成本高","solution":"AI工作流系统，支持多模型调度","outcome":"提升开发效率"}
-Output: {"review_type":"technical","pass_probability":65,"scores":{"架构设计":5,"代码质量":5,"安全性":4,"性能":5},"weighted_score":4.8,"rejection_reasons":["缺少架构文档","未说明技术选型","安全性不足"],"suggestions":["补充架构设计","明确技术选型","增加安全评估","量化目标"]}
+Output: {"review_type":"technical","pass_probability":65,"scores":{"架构设计":5,"代码质量":5,"安全性":4,"性能":5,"trust":6},"weighted_score":4.8,"rejection_reasons":["缺少架构文档","未说明技术选型","安全性不足"],"suggestions":["补充架构设计","明确技术选型","增加安全评估","量化目标"]}
 
 Input: {"persona":"开发者","problem":"未明确","solution":"一个Python工具库","outcome":"未明确"}
-Output: {"review_type":"opensource","pass_probability":25,"scores":{"社区价值":2,"文档":1,"可维护性":2,"许可证":1},"weighted_score":1.4,"rejection_reasons":["社区价值未明确","缺少README","许可证未说明"],"suggestions":["明确目标和用户","编写README","选择许可证","添加示例"]}
+Output: {"review_type":"opensource","pass_probability":25,"scores":{"社区价值":2,"文档":1,"可维护性":2,"许可证":1,"trust":2},"weighted_score":1.4,"rejection_reasons":["社区价值未明确","缺少README","许可证未说明"],"suggestions":["明确目标和用户","编写README","选择许可证","添加示例"]}
 ```

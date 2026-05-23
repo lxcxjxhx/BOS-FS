@@ -1,6 +1,6 @@
 {
   "name": "BOS-FS",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "generated_at": "2026-05-23",
   "files": [
     {"path": "BOS-FS.json", "type": "metadata", "description": "项目元数据"},
@@ -50,6 +50,7 @@
     {"path": "engine/core/06_review_simulator/reviewer_simulator.py", "type": "engine", "description": "评审模拟引擎"},
     {"path": "engine/tests/__init__.py", "type": "engine", "description": "测试包初始化"},
     {"path": "engine/tests/test_goal_refiner.py", "type": "engine", "description": "目标解析引擎测试"},
+    {"path": "engine/tests/test_reviewer_simulator.py", "type": "engine", "description": "评审模拟引擎测试"},
     {"path": "engine/README.md", "type": "doc", "description": "引擎说明文档"},
     {"path": "skills/manifest.json", "type": "config", "description": "Skill 清单与 Pipeline 数据流"},
     {"path": "guides/skill_usage.md", "type": "guide", "description": "Skill 独立使用指南"},

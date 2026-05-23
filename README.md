@@ -6,7 +6,7 @@
 </div>
 <p align="center">
 
-  <img src="https://img.shields.io/badge/version-v0.1.2-blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-v0.1.3-blue" alt="Version" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License" />
   <img src="https://img.shields.io/badge/status-Production Ready-brightgreen" alt="Status" />
 </p>
@@ -140,6 +140,7 @@ A: 参见 [guides/integration.md](guides/integration.md)。
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| **v0.1.3** | 2026-05-23 | Python引擎补齐(4个)、README Refactor输出Schema、Reviewer示例修复、submission_checklist一致性、评审模拟测试 |
 | **v0.1.2** | 2026-05-23 | 评审体系完整化、新增产品/开源评审规则、Pipeline职责分离、Skill输出Schema统一、示例输入输出对照 |
 | **v0.1.1** | 2026-05-23 | SKILL系统增强、新增Skill清单、InputValidation/ErrorHandling、重写SKILL.md |
 | **v0.1.0** | 2026-05-23 | Python引擎修复、引擎模块文件重对齐、新增engine基础项目结构、新增project_manifest |
