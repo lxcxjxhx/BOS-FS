@@ -156,5 +156,5 @@ A: 参见 [guides/integration.md](guides/integration.md)。
 ---
 
 <p align="center">
-  <sub>Built with ❤️ by <a href="https://github.com/HOS">HOS (安全风信子)</a></sub>
+  <sub>Built with ❤️ by <a href="https://github.com/lxcxjxhx">HOS (安全风信子)</a></sub>
 </p>
