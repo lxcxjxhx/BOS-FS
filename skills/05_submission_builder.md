@@ -15,6 +15,7 @@
 | screenshots_guide.md | 截图规范+关键界面 |
 | FAQ.md | 10个典型问答 |
 | risk_disclosure.md | 技术/市场/合规风险 |
+| trust_statement.md | 技术/商业/工程可信度声明（权威引用） |
 | bundle_meta.json | 项目元数据+goal+状态 |
 
 ## Component Templates
@@ -44,6 +45,28 @@
 
 ### risk_disclosure.md — 三张表：技术/市场/合规，格式：风险名 | 描述 | 影响(高/中/低) | 缓解措施。
 
+### trust_statement.md
+```markdown
+# 信任声明
+
+## 技术可信度
+- [ ] 基于 [权威框架名] 设计，参见 [来源链接]
+- [ ] 采用 [标准/规范]，符合 [具体条款]
+
+## 商业可信度
+- [ ] 对标 [成功模式/行业标准]
+- [ ] 市场验证：[数据/引用]
+
+## 工程可信度
+- [ ] 遵循 [工程实践标准]（如 Clean Code / SOLID / TDD）
+- [ ] 代码质量：[测试覆盖率/静态分析结果]
+
+## 引用清单
+| 引用来源 | 版本 | 关联内容 | 验证方式 |
+|----------|------|----------|----------|
+| [权威引用1] | [版本] | [与项目的关联] | [如何验证] |
+```
+
 ### bundle_meta.json
 ```json
 {"project_name":"","version":"1.0.0","build_date":"","components":[],"goal":{"persona":"","problem":"","solution":"","outcome":""},"status":"complete"}
@@ -57,5 +80,5 @@
 
 ## Output
 ```json
-{"bundle_path":"submission_bundle/","components":["README.md","demo_guide.md","introduction.md","screenshots_guide.md","FAQ.md","risk_disclosure.md","bundle_meta.json"],"status":"complete"}
+{"bundle_path":"submission_bundle/","components":["README.md","demo_guide.md","introduction.md","screenshots_guide.md","FAQ.md","risk_disclosure.md","trust_statement.md","bundle_meta.json"],"status":"complete"}
 ```

@@ -1,6 +1,6 @@
 {
   "name": "BOS-FS",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "tagline": "Build · Optimize · Submit",
   "author": "HOS(安全风信子)",
   "category": "submission_engineering",
@@ -30,6 +30,7 @@
     "do": ["明确目标", "补齐交付", "重构描述", "对齐评审语言"]
   },
   "changelog": {
+    "0.0.7": "信任背书增强、权威引用库、Submission新增trust_statement、评审新增信任度维度",
     "0.0.6": "集成指南合并、评分文件清理、Skill目录精简、模板格式增强",
     "0.0.5": "Skill文件压缩、Knowledge库合并(竞品分析+差异化)、评分标准统一、模板精简",
     "0.0.4": "README高密度化、集成指南合并、元数据精简",

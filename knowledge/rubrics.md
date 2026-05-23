@@ -5,11 +5,12 @@
 ### 阶段权重
 | 阶段 | 权重 | 评分标准 |
 |------|------|----------|
-| Goal Refinement | 15% | persona/problem/solution/outcome 完整度 |
-| Outcome Mapping | 15% | Feature→Capability→Outcome 转换质量 |
-| README Refactor | 25% | 五段式结构完整度、价值公式应用 |
-| Review Simulation | 25% | 四类评审平均通过率 |
-| Submission Build | 20% | 提交包组件完整性、一致性 |
+| Goal Refinement | 14% | persona/problem/solution/outcome 完整度 |
+| Outcome Mapping | 14% | Feature→Capability→Outcome 转换质量 |
+| README Refactor | 24% | 五段式结构完整度、价值公式应用 |
+| Review Simulation | 24% | 四类评审平均通过率 |
+| Submission Build | 19% | 提交包组件完整性、一致性 |
+| Trust 信任背书 | 5% | 权威引用/行业对标/透明度 |
 
 ### 阶段评分细则
 #### Goal Refinement (0-10): 8-10四字段完整具体有量化；5-7基本完整部分泛化；2-4字段缺失/模糊；0-1无法提取意图
@@ -17,6 +18,7 @@
 #### README Refactor (0-10): 8-10五段式完整架构图清晰；5-7结构基本完整；2-4结构混乱；0-1未重构
 #### Review Simulation (0-10): 8-10通过率>70%；5-7通过率50-70%；2-4通过率30-50%；0-1通过率<30%
 #### Submission Build (0-10): 8-10所有组件完整一致；5-7核心完整少量缺失；2-4部分生成；0-1未生成/严重不一致
+#### Trust 信任背书 (0-10): 8-10有充分权威引用+行业对标+透明度高；5-7有基本权威引用；2-4仅表面引用无关联；0-1无任何信任背书
 
 ### 综合评分: `pipeline_score = Σ(stage_score × weight)`
 | 等级 | 分数 | 含义 |
