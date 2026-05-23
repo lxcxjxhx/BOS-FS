@@ -6,10 +6,10 @@
 
 ## Pipeline
 ```
-Repo/描述 → Understand → Map → Refactor → Review → Build → Submit
-              ↓              ↓        ↓         ↓        ↓
-          Goal Refiner   Outcome   README    Reviewer  Submission
-                          Mapper   Refactor  Simulator Builder
+Repo/描述 → Understand → Map → Refactor → Review → Build → Analyze
+              ↓              ↓        ↓         ↓        ↓          ↓
+          Goal Refiner   Outcome   README    Reviewer  Submission  Reject
+                          Mapper   Refactor  Simulator Builder     Analyzer
 ```
 
 ## Steps
@@ -33,5 +33,5 @@ Repo/描述 → Understand → Map → Refactor → Review → Build → Submit
 
 ## Output
 ```json
-{"pipeline_result":{"goal":{},"outcomes":[],"readme":"","reviews":{},"bundle":{},"status":"complete|needs_revision"}}
+{"pipeline_result":{"step1_goal":{"persona":"","problem":"","solution":"","outcome":""},"step2_outcomes":[{"feature":"","capability":"","outcome":""}],"step3_readme":"","step4_review":{"review_type":"","pass_probability":0,"scores":{},"rejection_reasons":[],"suggestions":[]},"step5_bundle":{"bundle_path":"","components":[],"status":""},"step6_reject":{"real_issue":"","fixable_items":[],"resubmit_suggestion":""},"status":"complete|needs_revision"}}
 ```

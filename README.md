@@ -6,7 +6,7 @@
 </div>
 <p align="center">
 
-  <img src="https://img.shields.io/badge/version-v0.1.3-blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-v0.1.4-blue" alt="Version" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License" />
   <img src="https://img.shields.io/badge/status-Production Ready-brightgreen" alt="Status" />
 </p>
@@ -136,10 +136,35 @@ A: 参见 [guides/integration.md](guides/integration.md)。
 - **HOS 生态**: HOS-LS / HOS-M2F 负责"生成"，BOS-FS 负责"让成果被接受"
 - **信任体系**: 内置权威引用库，支持 OWASP / ISO 25010 / CII Best Practices 等权威标准引用
 
+## Python 引擎与测试
+
+BOS-FS 的核心功能通过 Skill 提示词文件实现，同时提供可选的 Python 引擎模块用于批量处理和自动化集成。
+
+### 引擎模块
+| 模块 | 路径 | 用途 |
+|------|------|------|
+| Goal Refiner | `engine/core/01_intent_parser/goal_refiner.py` | 目标解析引擎 |
+| Outcome Mapper | `engine/core/02_value_mapper/outcome_mapper.py` | 成果映射引擎 |
+| README Refactor | `engine/core/03_submission_optimizer/readme_refactor.py` | README 重构引擎 |
+| Submission Builder | `engine/core/04_delivery_builder/submission_builder.py` | 提交构建引擎 |
+| Reject Analyzer | `engine/core/05_artifact_generator/reject_analyzer.py` | 拒绝分析引擎 |
+| Reviewer Simulator | `engine/core/06_review_simulator/reviewer_simulator.py` | 评审模拟引擎 |
+
+### 快速运行
+```bash
+# 运行所有引擎演示
+python engine/main.py
+
+# 运行测试
+cd engine && pip install -r requirements.txt
+python -m pytest tests/ -v
+```
+
 ## 版本历史
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| **v0.1.4** | 2026-05-23 | 工程收尾与一致性修复、新增5个测试(4引擎+1集成)、manifest同步、引擎演示完整、rubrics对齐、删除orchestrator |
 | **v0.1.3** | 2026-05-23 | Python引擎补齐(4个)、README Refactor输出Schema、Reviewer示例修复、submission_checklist一致性、评审模拟测试 |
 | **v0.1.2** | 2026-05-23 | 评审体系完整化、新增产品/开源评审规则、Pipeline职责分离、Skill输出Schema统一、示例输入输出对照 |
 | **v0.1.1** | 2026-05-23 | SKILL系统增强、新增Skill清单、InputValidation/ErrorHandling、重写SKILL.md |

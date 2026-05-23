@@ -1,13 +1,13 @@
 {
   "name": "BOS-FS Skills",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "Submission Engineering - Skill Manifest",
   "skills": [
     {
       "id": "goal_refiner",
       "name": "Goal Refiner",
       "file": "01_goal_refiner.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": "项目描述文本",
       "output": {"format": "JSON", "schema": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"}},
       "depends_on": [],
@@ -17,7 +17,7 @@
       "id": "reviewer_simulator",
       "name": "Reviewer Simulator",
       "file": "02_reviewer_simulator.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"},
       "output": {"format": "JSON", "schema": {"review_type": "string", "pass_probability": "number", "scores": "object", "weighted_score": "number", "rejection_reasons": "array", "suggestions": "array"}},
       "depends_on": ["goal_refiner"],
@@ -27,7 +27,7 @@
       "id": "readme_refactor",
       "name": "README Refactor",
       "file": "03_readme_refactor.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": "原始 README 文本",
       "output": {"format": "Markdown", "structure": "What/Why/How/Result/Next"},
       "depends_on": ["goal_refiner"],
@@ -37,7 +37,7 @@
       "id": "outcome_mapper",
       "name": "Outcome Mapper",
       "file": "04_outcome_mapper.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": "功能描述列表",
       "output": {"format": "JSON", "schema": {"feature": "string", "capability": "string", "outcome": "string"}},
       "depends_on": [],
@@ -47,7 +47,7 @@
       "id": "submission_builder",
       "name": "Submission Builder",
       "file": "05_submission_builder.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": {"name": "string", "version": "string", "description": "string", "readme": "string", "outcome": "string"},
       "output": {"format": "FileSystem", "components": ["README.md", "demo_guide.md", "introduction.md", "screenshots_guide.md", "FAQ.md", "risk_disclosure.md", "trust_statement.md", "bundle_meta.json"]},
       "depends_on": ["goal_refiner", "readme_refactor", "outcome_mapper"],
@@ -57,7 +57,7 @@
       "id": "reject_analyzer",
       "name": "Reject Analyzer",
       "file": "06_reject_analyzer.md",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "input": "拒绝说明文本",
       "output": {"format": "JSON", "schema": {"real_issue": "string", "fixable_items": "array", "resubmit_suggestion": "string"}},
       "depends_on": ["reviewer_simulator"],
@@ -83,6 +83,12 @@
     "differentiation": "knowledge/differentiation.md",
     "rubrics": "knowledge/rubrics.md",
     "trust_signals": "knowledge/trust_signals.md",
-    "authority_references": "knowledge/authority_references.md"
+    "authority_references": "knowledge/authority_references.md",
+    "review_rules": {
+      "tech": "knowledge/review_rules/tech_review_rules.md",
+      "investment": "knowledge/review_rules/investment_review_rules.md",
+      "product": "knowledge/review_rules/product_review_rules.md",
+      "opensource": "knowledge/review_rules/opensource_review_rules.md"
+    }
   }
 }

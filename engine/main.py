@@ -54,6 +54,27 @@ def main():
         r = mapper.map_feature_to_outcome(feat)
         print(f"  {r['feature']} → {r['outcome']}")
 
+    print("\n=== README Refactor ===")
+    refactor = ReadmeRefactor()
+    sample_readme = """# My Project
+A smart delivery platform for dev teams.
+
+## Features
+- 模型调度
+- 自动测试
+- CI/CD
+
+## Roadmap
+- [ ] Phase 2: 多模型支持
+- [ ] Phase 3: 自定义规则
+"""
+    r = refactor.refactor(sample_readme, {
+        "solution": "开发一套自动化项目交付管理系统",
+        "problem": "交付效率低，沟通成本高",
+        "outcome": "提升交付效率50%",
+    })
+    print(r)
+
     print("\n=== Submission Builder ===")
     builder = SubmissionBuilder(output_dir="output/demo_bundle")
     r = builder.build_submission({
@@ -63,6 +84,11 @@ def main():
     })
     print(f"  Status: {r['status']}, Components: {len(r['components'])}")
 
+    print("\n=== Reject Analyzer ===")
+    analyzer = RejectAnalyzer()
+    r = analyzer.analyze("表达太底层，看不出用户价值")
+    print(f"  Real Issue: {r['real_issue']}")
+
     print("\n=== Reviewer Simulator ===")
     simulator = ReviewerSimulator()
     r = simulator.simulate("technical", {
@@ -71,11 +97,6 @@ def main():
         "test_coverage": 85,
     })
     print(f"  Pass Probability: {r['pass_probability']:.0%}")
-
-    print("\n=== Reject Analyzer ===")
-    analyzer = RejectAnalyzer()
-    r = analyzer.analyze("表达太底层，看不出用户价值")
-    print(f"  Real Issue: {r['real_issue']}")
 
 
 if __name__ == "__main__":
