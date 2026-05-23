@@ -117,3 +117,5 @@
 > **项目状态**：[概念验证 / 开发中 / 可用 / 生产就绪]  
 > **技术栈**：[主要技术列表]  
 > **开源协议**：[MIT / Apache-2.0 / 其他]
+
+> 参考: [skills/05_submission_builder.md](../skills/05_submission_builder.md) 获取完整的提交包构建规则。

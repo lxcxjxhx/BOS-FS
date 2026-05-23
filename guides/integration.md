@@ -11,6 +11,8 @@
 | OpenDevin | 配置 skills 路径 | skills/pipeline.md |
 | Copilot | `#file:skills/pipeline.md` | 自定义指令或 .github/copilot-instructions.md |
 | 通用 LLM | 读取 .md 作为 system prompt | skills/pipeline.md |
+| [快速上手](quickstart.md) | 5 分钟完成首次使用 | |
+| [速查表](cheatsheet.md) | 所有 Skill/命令/输出速查 | |
 
 ## Cursor 集成
 

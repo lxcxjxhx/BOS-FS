@@ -1,0 +1,88 @@
+{
+  "name": "BOS-FS Skills",
+  "version": "0.1.1",
+  "description": "Submission Engineering - Skill Manifest",
+  "skills": [
+    {
+      "id": "goal_refiner",
+      "name": "Goal Refiner",
+      "file": "01_goal_refiner.md",
+      "version": "0.1.1",
+      "input": "项目描述文本",
+      "output": {"format": "JSON", "schema": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"}},
+      "depends_on": [],
+      "trigger": "描述项目时"
+    },
+    {
+      "id": "reviewer_simulator",
+      "name": "Reviewer Simulator",
+      "file": "02_reviewer_simulator.md",
+      "version": "0.1.1",
+      "input": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"},
+      "output": {"format": "JSON", "schema": {"review_type": "string", "pass_probability": "number", "scores": "object", "weighted_score": "number", "rejection_reasons": "array", "suggestions": "array"}},
+      "depends_on": ["goal_refiner"],
+      "trigger": "预审时"
+    },
+    {
+      "id": "readme_refactor",
+      "name": "README Refactor",
+      "file": "03_readme_refactor.md",
+      "version": "0.1.1",
+      "input": "原始 README 文本",
+      "output": {"format": "Markdown", "structure": "What/Why/How/Result/Next"},
+      "depends_on": ["goal_refiner"],
+      "trigger": "优化文档时"
+    },
+    {
+      "id": "outcome_mapper",
+      "name": "Outcome Mapper",
+      "file": "04_outcome_mapper.md",
+      "version": "0.1.1",
+      "input": "功能描述列表",
+      "output": {"format": "JSON", "schema": {"feature": "string", "capability": "string", "outcome": "string"}},
+      "depends_on": [],
+      "trigger": "价值转换时"
+    },
+    {
+      "id": "submission_builder",
+      "name": "Submission Builder",
+      "file": "05_submission_builder.md",
+      "version": "0.1.1",
+      "input": {"name": "string", "version": "string", "description": "string", "readme": "string", "outcome": "string"},
+      "output": {"format": "FileSystem", "components": ["README.md", "demo_guide.md", "introduction.md", "screenshots_guide.md", "FAQ.md", "risk_disclosure.md", "trust_statement.md", "bundle_meta.json"]},
+      "depends_on": ["goal_refiner", "readme_refactor", "outcome_mapper"],
+      "trigger": "准备提交时"
+    },
+    {
+      "id": "reject_analyzer",
+      "name": "Reject Analyzer",
+      "file": "06_reject_analyzer.md",
+      "version": "0.1.1",
+      "input": "拒绝说明文本",
+      "output": {"format": "JSON", "schema": {"real_issue": "string", "fixable_items": "array", "resubmit_suggestion": "string"}},
+      "depends_on": ["reviewer_simulator"],
+      "trigger": "项目被拒时"
+    }
+  ],
+  "pipeline": {
+    "name": "BOS-FS Pipeline",
+    "file": "pipeline.md",
+    "stages": [
+      {"name": "Understand", "skill": "goal_refiner", "order": 1},
+      {"name": "Map", "skill": "outcome_mapper", "order": 2},
+      {"name": "Refactor", "skill": "readme_refactor", "order": 3},
+      {"name": "Review", "skill": "reviewer_simulator", "order": 4},
+      {"name": "Build", "skill": "submission_builder", "order": 5},
+      {"name": "Analyze", "skill": "reject_analyzer", "order": 6, "optional": true}
+    ],
+    "data_flow": "Repo/描述 → Understand → Map → Refactor → Review → Build → Submit",
+    "flow_diagram": "Goal Refiner → {persona,problem,solution,outcome} → Outcome Mapper → README Refactor → Reviewer Simulator → Submission Builder → submission_bundle/"
+  },
+  "knowledge_base": {
+    "base_context": "knowledge/base_context.md",
+    "differentiation": "knowledge/differentiation.md",
+    "rubrics": "knowledge/rubrics.md",
+    "trust_signals": "knowledge/trust_signals.md",
+    "authority_references": "knowledge/authority_references.md"
+  }
+}

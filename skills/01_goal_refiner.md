@@ -15,11 +15,55 @@
 ## Boundary
 描述<10字/纯技术→推断标注"（推断）"；字段缺失→"未明确"；多目标/矛盾→取最主要/最新
 
+## Input Validation
+- 最小输入: 项目描述 ≥ 5 字
+- 描述 < 10 字 → 推断标注"（推断）"
+- 空输入 → 输出 {"persona":"未明确","problem":"未明确","solution":"未明确","outcome":"未明确"}
+- 多目标/矛盾 → 取最主要/最新
+
+## Error Handling
+- 输入为空/缺失 → 输出错误信息并说明需要补充
+- 字段缺失 → 标注"未明确"
+- 矛盾信息 → 取最新/最主要的
+
 ## Output
 ```json
 {"persona":"<string>","problem":"<string>","solution":"<string>","outcome":"<string>"}
 ```
 约束：四字段必存在；非空；无换行；纯JSON。
+
+## Output Schema
+
+### JSON Schema Definition
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "persona": { "type": "string", "minLength": 1, "description": "目标用户/角色" },
+    "problem": { "type": "string", "minLength": 1, "description": "解决的痛点/问题" },
+    "solution": { "type": "string", "minLength": 1, "description": "解决方案/核心能力" },
+    "outcome": { "type": "string", "minLength": 1, "description": "预期目标/量化收益" }
+  },
+  "required": ["persona", "problem", "solution", "outcome"],
+  "additionalProperties": false
+}
+```
+
+### 字段类型说明
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| persona | string | ✅ | 目标用户群体，可为推断值（标注"（推断）"） |
+| problem | string | ✅ | 解决的痛点，可为推断值（标注"（推断）"） |
+| solution | string | ✅ | 方案描述，仅提取明确能力 |
+| outcome | string | ✅ | 量化目标优先，否则"未明确" |
+
+### 验证规则
+- **格式约束**: 输出必须为单行纯JSON，不得包含换行符、代码块标记（```）或额外文本
+- **必填字段**: `persona`, `problem`, `solution`, `outcome` 四个字段缺一不可
+- **非空校验**: 所有字段值不得为空字符串 `""`，最小长度为1
+- **禁止额外字段**: 不允许出现schema定义之外的字段
+- **推断标注**: 推断值必须包含"（推断）"后缀，便于下游识别
 
 ## Examples
 ```

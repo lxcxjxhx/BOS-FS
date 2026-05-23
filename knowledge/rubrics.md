@@ -56,3 +56,9 @@
 | 总分 | 等级 | 解读 |
 |------|------|------|
 | ≥ 30 | ✅ 通过 | 质量达标，进入下一轮 | 24-29 | ⚠️ 有条件通过 | 需改进后复审 | < 24 | ❌ 不通过 | 不满足基本要求 |
+
+## 交叉引用
+- [trust_signals.md](trust_signals.md) — 信任背书体系
+- [authority_references.md](authority_references.md) — 权威引用库
+- [differentiation.md](differentiation.md) — 核心差异化
+- [base_context.md](base_context.md) — 基础上下文

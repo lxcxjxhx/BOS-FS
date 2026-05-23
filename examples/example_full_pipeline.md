@@ -28,9 +28,18 @@
 ```
 
 ## Step 3: Refactor → README Refactor
-输出完整 README（What/Why/How/Result/Next 结构）
+**输入**: 原始 README（项目功能列表）
+```markdown
+# AI Workflow Engine
+- Multi-model support
+- Auto testing
+- CI/CD integration
+```
+**输出**: 完整 README（What/Why/How/Result/Next 结构）
+**转换逻辑**: 技术功能列表 → 五段式价值文档。What 提炼核心价值，Why 说明痛点，How 展示架构，Result 量化收益，Next 规划路线。
 
 ## Step 4: Review → Reviewer Simulator
+**输入**: Step 1 输出的 {persona, problem, solution, outcome}
 ```json
 {
   "technical": {"pass_probability": 72},
@@ -41,7 +50,18 @@
 ```
 
 ## Step 5: Build → Submission Builder
-生成 submission_bundle/ 包含 README/Demo/Pitch/FAQ/风险说明
+**输入**: Goal Refiner 输出 + README Refactor 输出 + Outcome Mapper 输出
+**输出**: submission_bundle/ 包含 8 个组件（README/Demo/Pitch/FAQ/风险说明/信任声明/截图指南/元数据）
+**转换逻辑**: 将各 Stage 输出整合为统一提交包，确保全局一致性。
 
 ## 最终输出
 完整的项目提交包，可直接用于开源发布、投资路演或内部评审。
+
+## 输入输出对照总结
+| Stage | 输入 | 输出格式 | 输出内容 |
+|-------|------|----------|----------|
+| Understand | 自然语言描述 | JSON | {persona, problem, solution, outcome} |
+| Map | 特性列表 | JSON | {features: [{feature, capability, outcome}]} |
+| Refactor | 原始 README | Markdown | What/Why/How/Result/Next |
+| Review | Stage 1 输出 | JSON | {review_type, pass_probability, scores, suggestions} |
+| Build | Stage 1-4 输出 | 文件系统 | submission_bundle/ (8 组件) |

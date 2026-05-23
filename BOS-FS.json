@@ -1,6 +1,6 @@
 {
   "name": "BOS-FS",
-  "version": "0.0.7",
+  "version": "0.1.2",
   "tagline": "Build · Optimize · Submit",
   "author": "HOS(安全风信子)",
   "category": "submission_engineering",
@@ -30,6 +30,11 @@
     "do": ["明确目标", "补齐交付", "重构描述", "对齐评审语言"]
   },
   "changelog": {
+    "0.1.2": "评审体系完整化、新增产品/开源评审规则、Pipeline职责分离、Skill输出Schema统一、示例输入输出对照",
+    "0.1.1": "SKILL系统增强、新增Skill清单、InputValidation/ErrorHandling、重写SKILL.md",
+    "0.1.0": "Python引擎修复、引擎模块文件重对齐、新增engine基础项目结构、新增project_manifest",
+    "0.0.9": "文档与可用性增强、新增快速上手指南和速查表、更新cursorrules、知识库交叉引用",
+    "0.0.8": "文档与结构一致性优化、新增CHANGELOG/SECURITY/CONTRIBUTING、修复README重复tagline",
     "0.0.7": "信任背书增强、权威引用库、Submission新增trust_statement、评审新增信任度维度",
     "0.0.6": "集成指南合并、评分文件清理、Skill目录精简、模板格式增强",
     "0.0.5": "Skill文件压缩、Knowledge库合并(竞品分析+差异化)、评分标准统一、模板精简",

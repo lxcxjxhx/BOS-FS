@@ -18,6 +18,17 @@
 | trust_statement.md | 技术/商业/工程可信度声明（权威引用） |
 | bundle_meta.json | 项目元数据+goal+状态 |
 
+## Input Validation
+- 必需: name, version, description
+- 可选: readme, outcome, persona, problem
+- 缺失必需字段 → 输出错误: {status: "error", message: "缺少必需字段"}
+- 无 readme → 生成简化版
+
+## Error Handling
+- 输入为空/缺失 → 输出错误信息并说明需要补充
+- 字段缺失 → 标注"未明确"
+- 矛盾信息 → 取最新/最主要的
+
 ## Component Templates
 
 ### demo_guide.md
@@ -82,3 +93,62 @@
 ```json
 {"bundle_path":"submission_bundle/","components":["README.md","demo_guide.md","introduction.md","screenshots_guide.md","FAQ.md","risk_disclosure.md","trust_statement.md","bundle_meta.json"],"status":"complete"}
 ```
+
+## Output Schema
+
+### JSON Schema Definition
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "bundle_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "提交包根目录路径"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "README.md",
+          "demo_guide.md",
+          "introduction.md",
+          "screenshots_guide.md",
+          "FAQ.md",
+          "risk_disclosure.md",
+          "trust_statement.md",
+          "bundle_meta.json"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "生成的组件文件列表"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["complete", "partial", "error"],
+      "description": "构建状态"
+    }
+  },
+  "required": ["bundle_path", "components", "status"],
+  "additionalProperties": false
+}
+```
+
+### 字段类型说明
+| 字段 | 类型 | 必填 | 取值范围 | 说明 |
+|------|------|------|----------|------|
+| bundle_path | string | ✅ | 非空路径字符串 | 提交包根目录路径 |
+| components | array | ✅ | 预定义文件名集合 | 实际生成的组件文件列表，不可重复 |
+| status | string | ✅ | complete / partial / error | `complete`=全部生成；`partial`=部分生成；`error`=构建失败 |
+
+### 验证规则
+- **格式约束**: 输出必须为单行纯JSON，不得包含换行符、代码块标记或额外文本
+- **components 枚举约束**: 数组中每个元素必须是预定义的8个文件名之一
+- **components 唯一性**: 数组元素不可重复（`uniqueItems: true`）
+- **components 非空**: 至少包含1个组件（`minItems: 1`）
+- **status 枚举约束**: 仅允许 `"complete"`, `"partial"`, `"error"` 三种状态值
+- **必填字段**: `bundle_path`, `components`, `status` 缺一不可
+- **禁止额外字段**: 不允许出现schema定义之外的字段

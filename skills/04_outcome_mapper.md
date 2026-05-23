@@ -23,11 +23,78 @@
 ## Generic Logic
 不在规则库: Feature→"让用户做什么？"→Capability→"带来什么收益？"→Outcome
 
+## Input Validation
+- 最小输入: ≥ 1 个功能描述
+- 纯技术描述 → 推断用户价值
+- 空输入 → 输出错误提示
+
+## Error Handling
+- 输入为空/缺失 → 输出错误信息并说明需要补充
+- 字段缺失 → 标注"未明确"
+- 矛盾信息 → 取最新/最主要的
+
 ## Output
 ```json
 {"feature":"<string>","capability":"<string>","outcome":"<string>"}
 ```
 多个: `{"features":[{"feature":"<string>","capability":"<string>","outcome":"<string>"}]}`
+
+## Output Schema
+
+### 单特性 JSON Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "feature": { "type": "string", "minLength": 1, "description": "技术特性" },
+    "capability": { "type": "string", "minLength": 1, "description": "用户能力" },
+    "outcome": { "type": "string", "minLength": 1, "description": "用户价值/收益" }
+  },
+  "required": ["feature", "capability", "outcome"],
+  "additionalProperties": false
+}
+```
+
+### 多特性 JSON Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "feature": { "type": "string", "minLength": 1 },
+          "capability": { "type": "string", "minLength": 1 },
+          "outcome": { "type": "string", "minLength": 1 }
+        },
+        "required": ["feature", "capability", "outcome"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["features"],
+  "additionalProperties": false
+}
+```
+
+### 字段类型说明
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| feature | string | ✅ | 技术特性描述，源自输入 |
+| capability | string | ✅ | 翻译为用户能力："让用户做什么？" |
+| outcome | string | ✅ | 翻译为用户价值/收益："带来什么收益？" |
+
+### 验证规则
+- **格式约束**: 单特性输出为扁平对象；多特性输出为 `{"features":[...]}` 结构，均须为单行纯JSON
+- **必填字段**: 每个特性对象中 `feature`, `capability`, `outcome` 三个字段缺一不可
+- **非空校验**: 所有字段值不得为空字符串 `""`，最小长度为1
+- **多特性数组**: `features` 数组至少包含1个元素（`minItems: 1`）
+- **禁止额外字段**: 特性对象和根对象均不允许出现schema定义之外的字段
 
 ## Examples
 ```

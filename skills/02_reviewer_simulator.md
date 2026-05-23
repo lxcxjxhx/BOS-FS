@@ -65,6 +65,16 @@
 
 扣分：无权威引用-15；差异化无据-20；指标不可验证-15；无风险披露-15
 
+## Input Validation
+- 必需字段: persona, problem, solution
+- outcome 缺失 → 使用"未明确"并减分
+- 空输入 → 输出错误: {pass_probability: 10, error: "输入为空"}
+
+## Error Handling
+- 输入为空/缺失 → 输出错误信息并说明需要补充
+- 字段缺失 → 标注"未明确"
+- 矛盾信息 → 取最新/最主要的
+
 ## Scoring Logic
 1. 基础分：50
 2. 加分：目标明确+15；方案可行+15；结果量化+10；文档完整+10
@@ -77,6 +87,75 @@
 {"review_type":"<type>","pass_probability":<10-95>,"scores":{"维度1":<0-10>,"...":<0-10>,"trust":<0-10>},"weighted_score":<0.0-10.0>,"rejection_reasons":["string"],"suggestions":["string"]}
 ```
 评分：8-10充分；5-7基本；2-4简略；0-1缺失
+
+## Output Schema
+
+### JSON Schema Definition
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "review_type": {
+      "type": "string",
+      "enum": ["technical", "investment", "product", "opensource"],
+      "description": "评审类型"
+    },
+    "pass_probability": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 95,
+      "description": "通过概率（百分比）"
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 10
+      },
+      "description": "各维度评分（含trust）"
+    },
+    "weighted_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 10.0,
+      "description": "加权总分"
+    },
+    "rejection_reasons": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "拒绝理由列表"
+    },
+    "suggestions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "改进建议列表"
+    }
+  },
+  "required": ["review_type", "pass_probability", "scores", "weighted_score", "rejection_reasons", "suggestions"],
+  "additionalProperties": false
+}
+```
+
+### 字段类型说明
+| 字段 | 类型 | 必填 | 取值范围 | 说明 |
+|------|------|------|----------|------|
+| review_type | string | ✅ | technical / investment / product / opensource | 评审类型，混合时选最主要类型 |
+| pass_probability | integer | ✅ | 10–95 | 通过概率百分比，封顶95保底10 |
+| scores | object | ✅ | 每维度 0–10 | 按评审类型对应维度评分，必须含 `trust` |
+| weighted_score | number | ✅ | 0.0–10.0 | 加权总分，保留1位小数 |
+| rejection_reasons | array | ✅ | 非空字符串数组 | 可为空数组 `[]` |
+| suggestions | array | ✅ | 非空字符串数组 | 可为空数组 `[]` |
+
+### 验证规则
+- **格式约束**: 输出必须为单行纯JSON，不得包含换行符、代码块标记或额外文本
+- **pass_probability 范围**: 必须在 10–95 之间（含边界），不得超出
+- **scores 范围**: 每个维度分数必须在 0–10 之间（含边界），类型为 number
+- **scores 必须含 trust**: 无论评审类型，`scores` 对象必须包含 `trust` 键
+- **weighted_score 精度**: 浮点数，范围 0.0–10.0，最多保留1位小数
+- **数组元素非空**: `rejection_reasons` 和 `suggestions` 的每个元素必须为非空字符串
+- **禁止额外字段**: 不允许出现schema定义之外的字段
 
 ## Rejection Patterns
 | 模式 | 触发 | 典型理由 |

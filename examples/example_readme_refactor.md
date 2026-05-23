@@ -1,6 +1,9 @@
-# BOS-FS README 重构对比示例
+# BOS-FS README 重构示例
 
-## Before（原始 README）
+## 对应 Skill
+[skills/03_readme_refactor.md](../skills/03_readme_refactor.md)
+
+## Input（原始 README）
 ```markdown
 # My Project
 
@@ -18,7 +21,7 @@ pip install my-project
 ```
 ```
 
-## After（重构后）
+## Output（重构后 README）
 ```markdown
 # 交付自动化平台
 
@@ -71,7 +74,7 @@ my-project run
 - [ ] 远期：企业级安全与合规
 ```
 
-## Key Transformations
+## 转换逻辑
 | 原始表达 | 转换后 |
 |---------|--------|
 | "AI workflow engine" | "帮助开发者将 AI 工作流从手动配置转为自动化交付" |

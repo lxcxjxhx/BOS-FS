@@ -98,3 +98,5 @@
 
 > **许可证**：[MIT / Apache-2.0 / 其他]  
 > **联系方式**：[邮箱/GitHub/文档链接]
+
+> 参考: [skills/03_readme_refactor.md](../skills/03_readme_refactor.md) 获取完整的 README 重构规则。

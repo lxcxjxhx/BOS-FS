@@ -18,6 +18,16 @@
 | 9 | 技术可行性 | "方案与问题不匹配" | 方案复杂度过高 | 简化架构+提供PoC |
 | 10 | 合规问题 | "许可证不明确" | 缺少合规声明 | 补充许可证+数据声明 |
 
+## Input Validation
+- 最小输入: 拒绝说明文本
+- 空输入 → 输出错误提示
+- 模糊拒绝理由 → 基于常见模式推断
+
+## Error Handling
+- 输入为空/缺失 → 输出错误信息并说明需要补充
+- 字段缺失 → 标注"未明确"
+- 矛盾信息 → 取最新/最主要的
+
 ## Analysis Logic
 1. 匹配拒绝模式（精确优先，模糊兜底）
 2. 提取真实问题（表层 vs 根本原因）
@@ -37,6 +47,100 @@
 ```json
 {"real_issue":"<string>","fixable_items":["<string>"],"resubmit_suggestion":"<string>","matched_pattern":"<string>","confidence":0.0-1.0,"checklist_results":{"readme_clear":true/false,"has_scenarios":true/false,"has_metrics":true/false,"has_risk_disclosure":true/false,"has_competitor_comparison":true/false,"docs_complete":true/false,"compliance_clear":true/false}}
 ```
+
+## Output Schema
+
+### JSON Schema Definition
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "real_issue": {
+      "type": "string",
+      "minLength": 1,
+      "description": "根本原因（非表层描述）"
+    },
+    "fixable_items": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "可操作的修复项列表"
+    },
+    "resubmit_suggestion": {
+      "type": "string",
+      "minLength": 1,
+      "description": "重新提交建议"
+    },
+    "matched_pattern": {
+      "type": "string",
+      "minLength": 1,
+      "description": "匹配的拒绝模式名称"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "匹配置信度"
+    },
+    "checklist_results": {
+      "type": "object",
+      "properties": {
+        "readme_clear": { "type": "boolean" },
+        "has_scenarios": { "type": "boolean" },
+        "has_metrics": { "type": "boolean" },
+        "has_risk_disclosure": { "type": "boolean" },
+        "has_competitor_comparison": { "type": "boolean" },
+        "docs_complete": { "type": "boolean" },
+        "compliance_clear": { "type": "boolean" }
+      },
+      "required": [
+        "readme_clear",
+        "has_scenarios",
+        "has_metrics",
+        "has_risk_disclosure",
+        "has_competitor_comparison",
+        "docs_complete",
+        "compliance_clear"
+      ],
+      "additionalProperties": false,
+      "description": "通用检查结果"
+    }
+  },
+  "required": ["real_issue", "fixable_items", "resubmit_suggestion", "matched_pattern", "confidence", "checklist_results"],
+  "additionalProperties": false
+}
+```
+
+### 字段类型说明
+| 字段 | 类型 | 必填 | 取值范围 | 说明 |
+|------|------|------|----------|------|
+| real_issue | string | ✅ | 非空 | 拒绝的根本原因，非表层描述 |
+| fixable_items | array | ✅ | 非空字符串数组，至少1项 | 具体可操作的修复项 |
+| resubmit_suggestion | string | ✅ | 非空 | 重新提交的策略建议 |
+| matched_pattern | string | ✅ | 非空 | 匹配的拒绝模式（来自Reject Patterns表） |
+| confidence | number | ✅ | 0.0–1.0 | 匹配置信度，<0.5需标注"低置信度，建议人工复核" |
+| checklist_results | object | ✅ | 见下方 | 通用检查清单结果 |
+
+### checklist_results 子字段
+| 子字段 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| readme_clear | boolean | ✅ | README是否清晰 |
+| has_scenarios | boolean | ✅ | 是否有典型场景 |
+| has_metrics | boolean | ✅ | 是否有可量化指标 |
+| has_risk_disclosure | boolean | ✅ | 是否有风险说明 |
+| has_competitor_comparison | boolean | ✅ | 是否有竞品对比 |
+| docs_complete | boolean | ✅ | 文档是否完整 |
+| compliance_clear | boolean | ✅ | 许可证/合规是否明确 |
+
+### 验证规则
+- **格式约束**: 输出必须为单行纯JSON，不得包含换行符、代码块标记或额外文本
+- **confidence 范围**: 必须在 0.0–1.0 之间（含边界），类型为 number
+- **低置信度标注**: `confidence < 0.5` 时，须在输出中附加"低置信度，建议人工复核"
+- **fixable_items 非空**: 至少包含1个修复项（`minItems: 1`）
+- **checklist_results 完整性**: 7个子字段缺一不可，均为 boolean 类型
+- **必填字段**: 顶层6个字段缺一不可
+- **禁止额外字段**: 不允许出现schema定义之外的字段（checklist_results 同理）
 
 ## Examples
 ```
