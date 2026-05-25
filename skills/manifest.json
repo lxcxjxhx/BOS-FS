@@ -1,0 +1,111 @@
+{
+  "name": "BOS-FS Skills",
+  "version": "0.2.3",
+  "description": "Submission Engineering - Skill Manifest",
+  "skills": [
+    {
+      "id": "goal_refiner",
+      "name": "Goal Refiner",
+      "file": "goal-refiner/SKILL.md",
+      "version": "0.2.3",
+      "input": "项目描述文本",
+      "output": {"format": "JSON", "schema": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"}},
+      "depends_on": [],
+      "trigger": "描述项目时"
+    },
+    {
+      "id": "reviewer_simulator",
+      "name": "Reviewer Simulator",
+      "file": "reviewer-simulator/SKILL.md",
+      "version": "0.2.3",
+      "input": {"persona": "string", "problem": "string", "solution": "string", "outcome": "string"},
+      "output": {"format": "JSON", "schema": {"review_type": "string", "pass_probability": "number", "scores": "object", "weighted_score": "number", "rejection_reasons": "array", "suggestions": "array"}},
+      "depends_on": ["goal_refiner"],
+      "trigger": "预审时"
+    },
+    {
+      "id": "readme_refactor",
+      "name": "README Refactor",
+      "file": "readme-refactor/SKILL.md",
+      "version": "0.2.3",
+      "input": "原始 README 文本",
+      "output": {"format": "Markdown", "structure": "What/Why/How/Result/Next"},
+      "depends_on": ["goal_refiner"],
+      "trigger": "优化文档时"
+    },
+    {
+      "id": "outcome_mapper",
+      "name": "Outcome Mapper",
+      "file": "outcome-mapper/SKILL.md",
+      "version": "0.2.3",
+      "input": "功能描述列表",
+      "output": {"format": "JSON", "schema": {"feature": "string", "capability": "string", "outcome": "string"}},
+      "depends_on": [],
+      "trigger": "价值转换时"
+    },
+    {
+      "id": "submission_builder",
+      "name": "Submission Builder",
+      "file": "submission-builder/SKILL.md",
+      "version": "0.2.3",
+      "input": {"name": "string", "version": "string", "description": "string", "readme": "string", "outcome": "string"},
+      "output": {"format": "FileSystem", "components": ["README.md", "demo_guide.md", "introduction.md", "screenshots_guide.md", "FAQ.md", "risk_disclosure.md", "trust_statement.md", "bundle_meta.json"]},
+      "depends_on": ["goal_refiner", "readme_refactor", "outcome_mapper"],
+      "trigger": "准备提交时"
+    },
+    {
+      "id": "reject_analyzer",
+      "name": "Reject Analyzer",
+      "file": "reject-analyzer/SKILL.md",
+      "version": "0.2.3",
+      "input": "拒绝说明文本",
+      "output": {"format": "JSON", "schema": {"real_issue": "string", "fixable_items": "array", "resubmit_suggestion": "string"}},
+      "depends_on": ["reviewer_simulator"],
+      "trigger": "项目被拒时"
+    },
+    {
+      "id": "book_knowledge_ingestor",
+      "name": "Book Knowledge Ingestor",
+      "file": "book-knowledge-ingestor/SKILL.md",
+      "version": "0.2.3",
+      "input": "书籍文件路径 (txt格式)",
+      "output": {"format": "FileSystem", "components": ["knowledge/<layer>/<topic>.md"]},
+      "depends_on": [],
+      "trigger": "需要摄入产品管理类书籍时"
+    }
+  ],
+  "pipeline": {
+    "name": "BOS-FS Pipeline",
+    "file": "bos-fs-pipeline/SKILL.md",
+    "stages": [
+      {"name": "Understand", "skill": "goal_refiner", "order": 1},
+      {"name": "Map", "skill": "outcome_mapper", "order": 2},
+      {"name": "Review", "skill": "reviewer_simulator", "order": 3},
+      {"name": "Refactor", "skill": "readme_refactor", "order": 4},
+      {"name": "Build", "skill": "submission_builder", "order": 5},
+      {"name": "Analyze", "skill": "reject_analyzer", "order": 6, "optional": true}
+    ],
+    "data_flow": "Repo/描述 → Understand → Map → Review → Refactor → Build → Submit",
+    "flow_diagram": "Goal Refiner → {persona,problem,solution,outcome} → Outcome Mapper → Reviewer Simulator → README Refactor → Submission Builder → submission_bundle/"
+  },
+  "knowledge_base": {
+    "base_context": "knowledge/base_context.md",
+    "differentiation": "knowledge/adoption/differentiation.md",
+    "rubrics": "knowledge/governance/rubrics.md",
+    "trust_framework": "knowledge/governance/trust_framework.md",
+    "metrics_framework": "knowledge/governance/metrics_framework.md",
+    "intent": "knowledge/intent/",
+    "review_rules": {
+      "tech": "knowledge/governance/review_rules/tech_review_rules.md",
+      "investment": "knowledge/governance/review_rules/investment_review_rules.md",
+      "product": "knowledge/governance/review_rules/product_review_rules.md",
+      "opensource": "knowledge/governance/review_rules/opensource_review_rules.md"
+    },
+    "templates": {
+      "readme": "knowledge/execution/templates/readme_template.md",
+      "pitch": "knowledge/execution/templates/pitch_template.md",
+      "demo_guide": "knowledge/execution/templates/demo_guide_template.md",
+      "submission_checklist": "knowledge/execution/templates/submission_checklist.md"
+    }
+  }
+}
