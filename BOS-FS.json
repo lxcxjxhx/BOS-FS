@@ -1,0 +1,65 @@
+{
+  "name": "BOS-FS",
+  "version": "0.2.11",
+  "tagline": "Build · Optimize · Submit",
+  "author": "HOS(安全风信子)",
+  "category": "submission_engineering",
+  "license": "MIT",
+  "skills": [
+    {"id": "goal_refiner", "name": "Goal Refiner", "file": "skills/goal-refiner/SKILL.md", "output": "{persona,problem,solution,outcome}", "trigger": "描述项目时"},
+    {"id": "reviewer_simulator", "name": "Reviewer Simulator", "file": "skills/reviewer-simulator/SKILL.md", "output": "{pass_probability,rejection_reasons,suggestions,hostile_questions,weakness_chain,kill_factors}", "trigger": "预审时"},
+    {"id": "readme_refactor", "name": "README Refactor", "file": "skills/readme-refactor/SKILL.md", "output": "重构后README", "trigger": "优化文档时"},
+    {"id": "outcome_mapper", "name": "Outcome Mapper", "file": "skills/outcome-mapper/SKILL.md", "output": "{feature,capability,outcome}", "trigger": "价值转换时"},
+    {"id": "submission_builder", "name": "Submission Builder", "file": "skills/submission-builder/SKILL.md", "output": "submission_bundle/", "trigger": "准备提交时"},
+    {"id": "reject_analyzer", "name": "Reject Analyzer", "file": "skills/reject-analyzer/SKILL.md", "output": "{real_issue,fixable_items,resubmit_suggestion}", "trigger": "项目被拒时"},
+    {"id": "book_knowledge_ingestor", "name": "Book Knowledge Ingestor", "file": "skills/book-knowledge-ingestor/SKILL.md", "output": "knowledge/<layer>/<topic>.md", "trigger": "需要摄入产品管理类书籍时"},
+    {"id": "pipeline", "name": "Pipeline Orchestrator", "file": "skills/bos-fs-pipeline/SKILL.md"}
+  ],
+  "pipeline": {
+    "stages": [
+      {"name": "Understand", "skill": "goal_refiner"},
+      {"name": "Map", "skill": "outcome_mapper"},
+      {"name": "Review", "skill": "reviewer_simulator"},
+      {"name": "Refactor", "skill": "readme_refactor"},
+      {"name": "Build", "skill": "submission_builder"},
+      {"name": "Analyze", "skill": "reject_analyzer"}
+    ],
+    "flow": "Repo → Understand → Map → Review → Refactor → Package → Submit"
+  },
+  "principles": {
+    "dont": ["伪造成果", "伪造用户", "伪造数据", "夸大能力", "规避规则"],
+    "do": ["明确目标", "补齐交付", "重构描述", "对齐评审语言"]
+  },
+  "changelog": {
+    "0.2.11": "SKILL结构完整性与引擎演示修复(reject-analyzer Purpose→Role、bos-fs-pipeline新增Output Schema章节、engine/main.py修正reviewer_simulator调用签名、outcome_mapper使用map_features批量方法、pytest 171 passed、全局版本号升级)",
+    "0.2.10": "SKILL目录结构与路径一致性优化(README.md全部skill链接从扁平路径→子目录路径、submission-builder Edge Cases增强、outcome-mapper Anti-Patterns增强、全局版本号升级)",
+    "0.2.9": "SKILL细节优化(skills-mini/版本标签0.2.7→0.2.8、Context路径修正、Full version格式统一、新增skills-mini/README.md使用入口、reviewer-simulator/reject-analyzer压缩版Schema紧凑多行化、全局版本号升级)",
+    "0.2.8": "高压缩Token-Saver版本(skills-mini/独立目录8个压缩SKILL.md、合并重复节/表格化/删除boilerplate、token减少30-60%、保留100%核心规则/约束/输出格式)",
+    "0.2.7": "SKILL文档质量优化(reviewersimulator规范统一pass_probability/五层标题/缺陷阈值、book-knowledge-ingestor精简CLI文档、reject-analyzer示例补全、readme-refactor Output章节、outcome-mapper Input格式、submission-builder FAQ数量统一、pipeline InputValidation+ErrorHandling、全局version标签)",
+    "0.2.6": "引擎剩余差距补齐(reject_analyzer 20模式+root_cause_tree、readme_refactor Quick Start+现有方案不足、submission_builder status枚举对齐+meta补充、outcome_mapper空输入提示、engine/main adversarial演示、manifest engine_status标注)",
+    "0.2.5": "引擎与SKILL对齐(新增adversarial评审引擎、反谄媚4层检测引擎化、非线性递减公式实现、弱点放大/kill_factors引擎输出、goal_refiner输入验证补充、测试用例从24→37)",
+    "0.2.4": "一致性优化与结构对齐(四类→五类评审全项目修正、六大→七大Skill修正、BOS-FS.json路径对齐、adversarial评审规则文件新增、rubrics敌对评审补充、版本号全局升级)",
+    "0.2.3": "敌对评审模式(竞争对手/敌对者视角)、弱点放大机制(缺陷→关联缺陷推断链)、预设质疑清单(8个尖锐问题)、kill_factors致命缺陷检测、adversarial评分逻辑(基础分35/封顶75/保底5)、敌对评审5维度评分表",
+    "0.2.2": "反讨好机制深度增强(四层防护:词汇级/结构级/分数级/模式级)、缺陷加权非线性递减(递增severity)、拒绝模式扩展(20种含数据隐私/可扩展性/技术债务等)、根因分析树(3层深度)、排查深度矩阵(4评审×7层)、交叉验证规则、基准对比规则",
+    "0.2.1": "书籍背书展示(10本NEED-PACK完整书单/贡献映射/BOS-FS能力对应)、学术诚信声明(用户亲自阅读并提炼要点)、各Skill文档方法论来源标注、知识文件来源追溯、README方法论背书章节",
+    "0.2.0": "book_knowledge_ingestor增强(实时摄取管道/增量更新/版本管理)、10本NEED-PACK书籍(3/3+NEED-PACK/4)逐章深度提取v0.2.0(NEED3/NEED4重校准)、知识提取密度控制(≤30行/章)与冗余检测(>80%相似度)、reviewer_simulator反谄媚机制(10分制/缺陷计数/复合惩罚)、Agent Skills开放标准格式(YAML frontmatter/kebab-case目录)、SKILL文件增强(Anti-Patterns/Edge Cases/Quality Gates)、reviewer-simulator与submission-builder新增references/目录",
+    "0.1.9": "8个SKILL文件增强(Anti-Patterns/Edge Cases/Quality Gates章节)、reviewer-simulator与submission-builder新增references/目录、知识文件引用格式更新(01_xxx.md→skill-name/SKILL.md)、book_ingestor.py增强(密度控制≤30行/章、冗余检测)、Agent Skills开放标准格式(YAML frontmatter)",
+    "0.1.8": "Anti-Sycophancy 机制(reviewer_simulator 缺陷计数/复合惩罚/等级上限/谄媚警告)、rubrics.md 新增反谄媚规则、10 本 NEED-PACK 书籍逐章深度提取完成",
+    "0.1.7": "NEED-PACK 综合提炼整合、accelerate_dora/mlops_delivery/data_intensive_patterns/architecture_quality_metrics 新增、6 个知识文件增强(Team Topologies/Project to Product/AI Engineering/Fundamentals/Discovery Habits/PM Practice)、151 tests/0 failed",
+    "0.1.6": "知识摄取引擎增强(batch/summary)、NEED-PACK/3 完整摄取(5本书→238文件)、NEED-PACK/4 完整摄取(5本书→371文件)、测试修复(151 passed/0 failed)、_slugify Windows 兼容性修复",
+    "0.1.4": "工程收尾与一致性修复、新增5个测试(4引擎+1集成)、manifest同步、引擎演示完整、rubrics对齐、删除orchestrator",
+    "0.1.3": "Python引擎补齐(4个)、README Refactor输出Schema、Reviewer示例修复、submission_checklist一致性、评审模拟测试",
+    "0.1.2": "评审体系完整化、新增产品/开源评审规则、Pipeline职责分离、Skill输出Schema统一、示例输入输出对照",
+    "0.1.1": "SKILL系统增强、新增Skill清单、InputValidation/ErrorHandling、重写SKILL.md",
+    "0.1.0": "Python引擎修复、引擎模块文件重对齐、新增engine基础项目结构、新增project_manifest",
+    "0.0.9": "文档与可用性增强、新增快速上手指南和速查表、更新cursorrules、知识库交叉引用",
+    "0.0.8": "文档与结构一致性优化、新增CHANGELOG/SECURITY/CONTRIBUTING、修复README重复tagline",
+    "0.0.7": "信任背书增强、权威引用库、Submission新增trust_statement、评审新增信任度维度",
+    "0.0.6": "集成指南合并、评分文件清理、Skill目录精简、模板格式增强",
+    "0.0.5": "Skill文件压缩、Knowledge库合并(竞品分析+差异化)、评分标准统一、模板精简",
+    "0.0.4": "README高密度化、集成指南合并、元数据精简",
+    "0.0.3": "Skill Token优化(~55%压缩)、.trae/目录去重、公共上下文提取",
+    "0.0.2": "生产级Skill、pipeline编排器、多平台集成",
+    "0.0.1": "初始版本：七大Skill+基础Runtime+知识库"
+  }
+}

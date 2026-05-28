@@ -1,0 +1,21 @@
+{
+  "name": "BOS-FS Skills (Mini/Token-Saver)",
+  "version": "0.2.11",
+  "description": "Compressed Skill Manifest - Token-Optimized Variant",
+  "note": "This is a high-density variant. For full SKILLs with detailed examples, see skills/ directory.",
+  "skills": [
+    {"id": "goal_refiner", "name": "Goal Refiner", "file": "goal-refiner.md", "version": "0.2.11", "trigger": "描述项目时"},
+    {"id": "reviewer_simulator", "name": "Reviewer Simulator", "file": "reviewer-simulator.md", "version": "0.2.11", "trigger": "预审时"},
+    {"id": "readme_refactor", "name": "README Refactor", "file": "readme-refactor.md", "version": "0.2.11", "trigger": "优化文档时"},
+    {"id": "outcome_mapper", "name": "Outcome Mapper", "file": "outcome-mapper.md", "version": "0.2.11", "trigger": "价值转换时"},
+    {"id": "submission_builder", "name": "Submission Builder", "file": "submission-builder.md", "version": "0.2.11", "trigger": "准备提交时"},
+    {"id": "reject_analyzer", "name": "Reject Analyzer", "file": "reject-analyzer.md", "version": "0.2.11", "trigger": "项目被拒时"},
+    {"id": "book_knowledge_ingestor", "name": "Book Knowledge Ingestor", "file": "book-knowledge-ingestor.md", "version": "0.2.11", "trigger": "摄入书籍时"},
+    {"id": "pipeline", "name": "Pipeline Orchestrator", "file": "bos-fs-pipeline.md", "version": "0.2.11"}
+  ],
+  "compression_notes": {
+    "techniques": ["合并重复节", "表格化", "删除学术诚信boilerplate", "示例引用主版本"],
+    "target_reduction": "30-70% token",
+    "preserved": ["核心规则", "约束", "输出Schema", "反谄媚", "质量门"]
+  }
+}

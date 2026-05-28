@@ -1,0 +1,6 @@
+# BOS-FS Engine — 无外部依赖
+# 所有模块仅使用 Python 标准库
+# Python >= 3.9
+
+# Testing (optional)
+pytest>=7.0
