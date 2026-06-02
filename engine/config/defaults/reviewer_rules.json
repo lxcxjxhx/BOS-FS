@@ -1,0 +1,94 @@
+{
+  "_comment": "评审维度权重与阈值配置，提取自 reviewer_simulator.py",
+
+  "review_types": {
+    "technical": {
+      "_comment": "技术评审维度",
+      "dimensions": {
+        "架构设计": {"weight": 25, "max": 10},
+        "技术栈": {"weight": 20, "max": 10},
+        "代码质量": {"weight": 25, "max": 10},
+        "安全性": {"weight": 15, "max": 10},
+        "依赖管理": {"weight": 15, "max": 10}
+      }
+    },
+
+    "investment": {
+      "_comment": "投资评审维度",
+      "dimensions": {
+        "市场规模": {"weight": 25, "max": 10},
+        "ROI估算": {"weight": 25, "max": 10},
+        "竞品分析": {"weight": 20, "max": 10},
+        "预算规划": {"weight": 15, "max": 10},
+        "时间线": {"weight": 15, "max": 10}
+      }
+    },
+
+    "product": {
+      "_comment": "产品评审维度",
+      "dimensions": {
+        "用户画像": {"weight": 25, "max": 10},
+        "价值主张": {"weight": 25, "max": 10},
+        "MVP范围": {"weight": 15, "max": 10},
+        "成功指标": {"weight": 20, "max": 10},
+        "反馈机制": {"weight": 15, "max": 10}
+      }
+    },
+
+    "opensource": {
+      "_comment": "开源评审维度",
+      "dimensions": {
+        "开源许可证": {"weight": 30, "max": 10},
+        "文档完整度": {"weight": 25, "max": 10},
+        "贡献指引": {"weight": 15, "max": 10},
+        "行为准则": {"weight": 10, "max": 10},
+        "第三方合规": {"weight": 20, "max": 10}
+      }
+    }
+  },
+
+  "thresholds": {
+    "_comment": "通用评估阈值",
+    "test_coverage": {
+      "_comment": "测试覆盖率阈值(%)",
+      "excellent": 80,
+      "good": 60,
+      "poor": 30
+    },
+    "text_length": {
+      "_comment": "文本描述长度阈值(字符数)",
+      "detailed": 50,
+      "moderate": 30,
+      "brief": 20
+    },
+    "dependency_count": {
+      "_comment": "依赖数量阈值",
+      "optimal": 10,
+      "max_acceptable": 20
+    }
+  },
+
+  "defect_penalty": {
+    "_comment": "缺陷非线性惩罚规则",
+    "severity_curve": {
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.3,
+      "4": 1.7,
+      "5+": "2.0 + (n-5) * 0.5"
+    },
+    "score_deduction_per_severity": 0.5,
+    "score_ceiling_by_defects": {
+      "0-1": 10.0,
+      "2": 8.5,
+      "3": 7.0,
+      "4+": 6.0
+    }
+  },
+
+  "pass_probability": {
+    "_comment": "通过率计算规则",
+    "normal_range": {"min": 0.10, "max": 0.95},
+    "adversarial_range": {"min": 0.05, "max": 0.75}
+  }
+}
