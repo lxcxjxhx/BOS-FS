@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOS-FS v1.0.0 — 演示与安装指南</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #333; }
+        h1 { border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
+        h2 { border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+        pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        code { background: #f6f8fa; padding: 0.2em 0.4em; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #dfe2e5; padding: 8px; text-align: left; }
+        th { background: #f6f8fa; }
+        blockquote { border-left: 4px solid #dfe2e5; margin: 0; padding: 0 1em; color: #6a737d; }
+    </style>
+</head>
+<body>
+<h1>BOS-FS v1.0.0 — 演示与安装指南</h1>
+<blockquote>标准化项目交付与提交文档自动化平台</blockquote>
+<h2>环境准备</h2>
+<p>1. Python 3.9+ 运行环境</p>
+<p>2. 满足以下技术栈要求：</p>
+<ul>
+<li>Python 3.9+</li>
+<li>Markdown</li>
+<li>JSON</li>
+<li>Git</li>
+</ul>
+<h2>安装步骤</h2>
+<pre><code class="language-bash">
+# 1. 克隆项目
+git clone &lt;repository_url&gt;
+cd BOS-FS
+
+# 2. 安装依赖
+pip install -r requirements.txt
+
+# 3. 配置环境变量（如需要）
+cp .env.example .env
+</code></pre>
+<h2>演示流程</h2>
+<h3>Step 1: 一键生成 8 组件标准化提交文档包</h3>
+<p>按照业务场景完成该功能操作并验证结果。</p>
+<h3>Step 2: 审核拒绝原因自动分析与修复建议</h3>
+<p>按照业务场景完成该功能操作并验证结果。</p>
+<h3>Step 3: 模块化可扩展架构，支持自定义模板</h3>
+<p>按照业务场景完成该功能操作并验证结果。</p>
+<h3>Step 4: 全局一致性自动校验</h3>
+<p>按照业务场景完成该功能操作并验证结果。</p>
+<h3>Step 5: 开箱即用的演示与安装指南</h3>
+<p>按照业务场景完成该功能操作并验证结果。</p>
+<h2>验证与排查</h2>
+<table>
+<tr><td>检查项</td><td>预期结果</td></tr>
+<tr><td>服务启动</td><td>控制台无报错，服务正常监听</td></tr>
+<tr><td>核心接口</td><td>返回 200 状态码</td></tr>
+<tr><td>数据持久化</td><td>数据库记录正确写入</td></tr>
+</table>
+<p>如遇问题，请查看 <code>FAQ.md</code> 获取帮助。</p>
+</body>
+</html>

@@ -1,0 +1,147 @@
+{
+  "_comment": "渗透测试场景配置 - 渗透测试服务交付专用评审与提交规则",
+  "description": "渗透测试服务交付场景配置",
+  "scenario_id": "pen-test",
+  "version": "1.0.0",
+
+  "reviewer_rules": {
+    "_comment": "渗透测试场景评审规则覆盖 - 强调安全性维度",
+    "review_types": {
+      "technical": {
+        "_comment": "技术评审维度权重调整 - 安全性优先",
+        "dimensions": {
+          "安全性": {"weight": 35, "max": 10},
+          "架构设计": {"weight": 20, "max": 10},
+          "代码质量": {"weight": 20, "max": 10},
+          "技术栈": {"weight": 15, "max": 10},
+          "依赖管理": {"weight": 10, "max": 10}
+        }
+      }
+    },
+    "thresholds": {
+      "_comment": "渗透测试场景阈值覆盖",
+      "test_coverage": {
+        "_comment": "测试覆盖率阈值(%) - 渗透测试要求更高",
+        "excellent": 90,
+        "good": 70,
+        "poor": 40
+      },
+      "text_length": {
+        "_comment": "漏洞描述需更详细",
+        "detailed": 100,
+        "moderate": 50,
+        "brief": 30
+      }
+    },
+    "security_checks": {
+      "_comment": "渗透测试专属安全检查项",
+      "vulnerability_classification": {
+        "critical": {"score_impact": 3.0, "must_fix": true},
+        "high": {"score_impact": 2.0, "must_fix": true},
+        "medium": {"score_impact": 1.0, "must_fix": false},
+        "low": {"score_impact": 0.5, "must_fix": false},
+        "info": {"score_impact": 0.1, "must_fix": false}
+      },
+      "required_security_tests": [
+        "sql_injection",
+        "xss",
+        "csrf",
+        "authentication_bypass",
+        "authorization_flaw",
+        "sensitive_data_exposure",
+        "command_injection",
+        "file_upload_vulnerability",
+        "ssrf",
+        "xxe"
+      ],
+      "security_score_minimum": 7,
+      "zero_day_disclosure_required": true
+    },
+    "defect_penalty": {
+      "_comment": "安全缺陷加重惩罚",
+      "severity_curve": {
+        "1": 1.0,
+        "2": 1.2,
+        "3": 1.5,
+        "4": 2.0,
+        "5+": "2.5 + (n-5) * 0.8"
+      },
+      "security_vulnerability_multiplier": 1.5
+    }
+  },
+
+  "submission_components": {
+    "_comment": "渗透测试场景提交组件 - 8个默认 + 2个安全专属组件",
+    "default_components": [
+      "readme",
+      "demo_guide",
+      "introduction",
+      "screenshots_guide",
+      "faq",
+      "risk_disclosure",
+      "trust_statement",
+      "bundle_meta"
+    ],
+    "security_components": [
+      {
+        "id": "security_report",
+        "filename": "security_report.md",
+        "description": "渗透测试安全报告（测试范围 / 方法论 / 漏洞发现 / 风险评级 / 修复建议）",
+        "required_fields": ["test_scope", "methodology", "findings", "risk_ratings"],
+        "optional_fields": ["executive_summary", "appendix", "tools_used"],
+        "output_extension": ".md",
+        "priority": 9,
+        "mandatory": true
+      },
+      {
+        "id": "remediation_guide",
+        "filename": "remediation_guide.md",
+        "description": "漏洞修复指南（按优先级排序的修复方案 / 代码示例 / 验证步骤）",
+        "required_fields": ["vulnerability_id", "fix_description", "code_example", "verification_steps"],
+        "optional_fields": ["estimated_effort", "alternative_solutions"],
+        "output_extension": ".md",
+        "priority": 10,
+        "mandatory": true
+      }
+    ],
+    "total_required_components": 10,
+    "consistency_check": {
+      "enabled": true,
+      "security_cross_validation": true,
+      "vulnerability_traceability": true
+    }
+  },
+
+  "scenario_thresholds": {
+    "_comment": "渗透测试场景专属阈值",
+    "min_security_score": 7,
+    "require_vulnerability_details": true,
+    "require_poc": true,
+    "poc_requirements": {
+      "_comment": "PoC 要求",
+      "reproducible": true,
+      "non_destructive": true,
+      "includes_steps": true,
+      "includes_evidence": true,
+      "max_exploit_time_seconds": 300
+    },
+    "vulnerability_detail_requirements": {
+      "_comment": "漏洞详情必须包含的字段",
+      "required_fields": [
+        "vulnerability_type",
+        "cve_id",
+        "cvss_score",
+        "affected_component",
+        "attack_vector",
+        "impact_description",
+        "remediation_priority"
+      ]
+    },
+    "pass_criteria": {
+      "all_critical_fixed": true,
+      "all_high_fixed_or_mitigated": true,
+      "medium_acceptable_count": 5,
+      "security_reviewer_approval_required": true
+    }
+  }
+}
