@@ -1,0 +1,104 @@
+{
+  "_comment": "提交组件配置：8 组件文档包定义及输出格式",
+
+  "output_formats": ["markdown", "json", "html"],
+
+  "default_format": "markdown",
+
+  "components": [
+    {
+      "id": "readme",
+      "filename": "README.md",
+      "description": "五段式项目说明文档（概述 / 特性 / 快速开始 / 架构 / 许可）",
+      "generator_method": "generate_readme",
+      "required_fields": ["name", "version", "description"],
+      "optional_fields": ["tagline", "features", "tech_stack", "target_users"],
+      "output_extension": ".md",
+      "priority": 1
+    },
+    {
+      "id": "demo_guide",
+      "filename": "demo_guide.md",
+      "description": "演示与安装指南（环境准备 / 安装步骤 / 演示流程 / 验证排查）",
+      "generator_method": "generate_demo_guide",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline", "features", "tech_stack"],
+      "output_extension": ".md",
+      "priority": 2
+    },
+    {
+      "id": "introduction",
+      "filename": "introduction.md",
+      "description": "项目推介文档（概述 / 价值主张 / 目标用户 / 架构亮点 / 适用场景）",
+      "generator_method": "generate_introduction",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline", "description", "value_proposition", "target_users"],
+      "output_extension": ".md",
+      "priority": 3
+    },
+    {
+      "id": "screenshots_guide",
+      "filename": "screenshots_guide.md",
+      "description": "截图规范与指南（截图清单 / 存放路径 / 注意事项）",
+      "generator_method": "generate_screenshots_guide",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline", "features"],
+      "output_extension": ".md",
+      "priority": 4
+    },
+    {
+      "id": "faq",
+      "filename": "FAQ.md",
+      "description": "常见问题解答（10 条标准 FAQ 问答）",
+      "generator_method": "generate_faq",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline"],
+      "output_extension": ".md",
+      "priority": 5
+    },
+    {
+      "id": "risk_disclosure",
+      "filename": "risk_disclosure.md",
+      "description": "风险披露声明（技术风险 / 市场风险 / 合规风险 / 免责声明）",
+      "generator_method": "generate_risk_disclosure",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline"],
+      "output_extension": ".md",
+      "priority": 6
+    },
+    {
+      "id": "trust_statement",
+      "filename": "trust_statement.md",
+      "description": "信任声明（安全承诺 / 架构原则 / 质量保障 / 透明度 / 持续改进）",
+      "generator_method": "generate_trust_statement",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline"],
+      "output_extension": ".md",
+      "priority": 7
+    },
+    {
+      "id": "bundle_meta",
+      "filename": "bundle_meta.json",
+      "description": "提交包元数据（项目信息 / 组件清单 / 构建时间戳）",
+      "generator_method": "generate_meta",
+      "required_fields": ["name", "version"],
+      "optional_fields": ["tagline", "description", "target_users", "tech_stack", "features", "goal"],
+      "output_extension": ".json",
+      "priority": 8
+    }
+  ],
+
+  "consistency_check": {
+    "_comment": "全局一致性检查配置",
+    "enabled": true,
+    "check_fields": ["name", "version", "tagline"],
+    "required_components_count": 8,
+    "status_levels": {
+      "complete": {"issues": 0, "components": 8},
+      "partial": {"max_issues": 3},
+      "error": {"min_issues": 4}
+    }
+  },
+
+  "output_directory": "submission_bundle"
+}

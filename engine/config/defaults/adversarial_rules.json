@@ -1,0 +1,191 @@
+{
+  "_comment": "对抗性评审(Adversarial Review)规则配置",
+
+  "scoring": {
+    "_comment": "基础评分范围",
+    "base_score": 35,
+    "ceiling": 75,
+    "floor": 5
+  },
+
+  "pass_probability": {
+    "_comment": "当存在≥2个kill factors时的通过率上限",
+    "cap_with_kill_factors": 0.20
+  },
+
+  "deduction_rules": {
+    "_comment": "各字段扣分规则",
+    "unmarked_field": {
+      "_comment": "字段含'未明确': 每次扣20分",
+      "fields": ["architecture", "tech_stack", "security_design", "competitor_analysis", "cost_estimate", "exit_strategy"],
+      "deduction": 20,
+      "trigger_keyword": "未明确"
+    },
+    "inferred_field": {
+      "_comment": "字段含'推断': 每次扣10分",
+      "fields": ["architecture", "tech_stack", "security_design", "competitor_analysis", "cost_estimate", "user_validation"],
+      "deduction": 10,
+      "trigger_keyword": "推断"
+    },
+    "missing_architecture_diagram": {
+      "_comment": "缺少架构图: 扣25分",
+      "deduction": 25,
+      "affects_dimension": "技术脆弱性",
+      "dimension_penalty": 2
+    },
+    "missing_competitor_analysis": {
+      "_comment": "缺少竞品分析: 扣20分",
+      "deduction": 20,
+      "affects_dimension": "商业风险",
+      "dimension_penalty": 2
+    },
+    "missing_security_design": {
+      "_comment": "缺少安全设计: 扣20分",
+      "deduction": 20,
+      "affects_dimension": "合规法律",
+      "dimension_penalty": 2
+    },
+    "missing_user_validation": {
+      "_comment": "缺少用户验证: 扣15分",
+      "deduction": 15,
+      "affects_dimension": "商业风险",
+      "dimension_penalty": 1
+    },
+    "missing_tech_rationale": {
+      "_comment": "缺少技术选型依据: 扣15分",
+      "deduction": 15,
+      "affects_dimension": "技术脆弱性",
+      "dimension_penalty": 1
+    },
+    "missing_quantified_metrics": {
+      "_comment": "每项缺少的量化指标: 扣10分",
+      "fields": ["roi_estimate", "budget", "market_size", "success_metrics", "timeline"],
+      "deduction_per_missing": 10
+    },
+    "missing_cost_estimate": {
+      "_comment": "缺少成本估算: 不直接扣分但增加缺陷数",
+      "affects_dimension": "商业风险",
+      "dimension_penalty": 1
+    },
+    "missing_exit_strategy": {
+      "_comment": "缺少退出策略: 不直接扣分但增加缺陷数",
+      "affects_dimension": "商业风险",
+      "dimension_penalty": 1
+    },
+    "missing_team_background": {
+      "_comment": "团队背景不明: 不直接扣分但增加缺陷数",
+      "affects_dimension": "执行能力",
+      "dimension_penalty": 2
+    },
+    "missing_test_coverage": {
+      "_comment": "测试覆盖率<30%: 不直接扣分但增加缺陷数",
+      "threshold": 30,
+      "affects_dimension": "技术脆弱性",
+      "dimension_penalty": 2
+    }
+  },
+
+  "dimensions": {
+    "_comment": "对抗性评审维度",
+    "技术脆弱性": {"weight": 20, "max": 10},
+    "商业风险": {"weight": 20, "max": 10},
+    "执行能力": {"weight": 20, "max": 10},
+    "合规法律": {"weight": 20, "max": 10},
+    "致命缺陷": {"weight": 20, "max": 10}
+  },
+
+  "weakness_chain_map": {
+    "_comment": "缺陷推演链: 原始缺陷→一层推论→二层推论",
+    "无安全设计": {
+      "layer1": "可能存在数据泄露风险",
+      "layer2": "合规审计不通过，面临罚款"
+    },
+    "无竞品分析": {
+      "layer1": "市场定位不清晰",
+      "layer2": "商业化可行性存疑"
+    },
+    "架构文档缺失": {
+      "layer1": "技术债可能严重",
+      "layer2": "维护成本不可控"
+    },
+    "无测试覆盖": {
+      "layer1": "代码质量不可验证",
+      "layer2": "生产故障率高"
+    },
+    "无用户验证": {
+      "layer1": "需求可能不存在",
+      "layer2": "产品无人使用"
+    },
+    "团队背景不明": {
+      "layer1": "执行能力存疑",
+      "layer2": "交付延期"
+    },
+    "无成本估算": {
+      "layer1": "商业模式不可行",
+      "layer2": "资金链断裂风险"
+    },
+    "无退出策略": {
+      "layer1": "沉没成本风险",
+      "layer2": "无法安全下线"
+    }
+  },
+
+  "question_bank": {
+    "_comment": "对抗性问题库，按缺陷类型分类",
+    "架构文档缺失": [
+      "没有架构图，你如何保证团队对系统理解一致？",
+      "架构文档缺失是否意味着系统设计是临时拼凑的？"
+    ],
+    "无竞品分析": [
+      "不做竞品分析，你如何证明你的产品有市场差异化？",
+      "如果已有巨头进入这个赛道，你的护城河是什么？"
+    ],
+    "无安全设计": [
+      "没有安全设计，用户数据泄露后谁承担责任？",
+      "你的系统如何应对SQL注入、XSS等常见攻击？"
+    ],
+    "无测试覆盖": [
+      "没有测试覆盖，你如何保证代码质量？",
+      "生产环境出现P0故障时，你的应急响应机制是什么？"
+    ],
+    "无用户验证": [
+      "没有用户验证，你如何确认需求是真实存在的而非臆想？",
+      "如果上线后DAU为零，你的应对方案是什么？"
+    ],
+    "团队背景不明": [
+      "团队没有相关领域经验，凭什么能交付这个项目？",
+      "核心成员如果离职，项目能否继续？"
+    ],
+    "无成本估算": [
+      "没有成本估算，你如何向投资人证明商业可行性？",
+      "如果预算超支200%，项目还能继续吗？"
+    ],
+    "无退出策略": [
+      "如果项目失败，如何安全下线而不影响现有用户？",
+      "沉没成本达到多少时你会决定终止项目？"
+    ],
+    "无技术选型依据": [
+      "为什么选这个技术栈而不是更成熟的替代方案？",
+      "技术选型的权衡分析在哪里？"
+    ]
+  },
+
+  "hostile_questions": {
+    "_comment": "问题生成规则",
+    "min_count": 5,
+    "max_count": 8,
+    "fallback_questions": [
+      "这个项目的核心假设是什么？如果假设不成立怎么办？",
+      "你的项目在哪些环节存在单点故障？",
+      "如果主要竞争对手降价50%，你的应对策略是什么？"
+    ]
+  },
+
+  "kill_factors": {
+    "_comment": "致命因素识别规则",
+    "severity_keywords": ["数据泄露", "合规审计", "罚款", "资金链断裂", "无人使用"],
+    "min_count": 1,
+    "prefix_severe": "【致命】",
+    "prefix_fallback": "【严重】"
+  }
+}

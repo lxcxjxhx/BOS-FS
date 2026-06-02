@@ -1,0 +1,41 @@
+{
+  "_comment": "反讨好(Anti-Sycophancy)五层防护配置",
+
+  "layer1_lexical": {
+    "_comment": "词汇级: 检测无证据支撑的空泛赞美词",
+    "empty_praise_words": ["优秀", "完美", "出色", "一流", "极佳", "卓越"],
+    "trust_penalty": 2,
+    "warning_prefix": "[反讨好-L1]"
+  },
+
+  "layer2_structural": {
+    "_comment": "结构级: 无拒绝原因但输入含推断/未明确标记",
+    "trigger_keywords": ["未明确", "推断"],
+    "auto_risk_flag": true,
+    "warning_prefix": "[反讨好-L2]"
+  },
+
+  "layer3_score": {
+    "_comment": "分数级: 高分但证据覆盖不足 & 方差过低",
+    "high_score_threshold": 9,
+    "variance_threshold": 0.5,
+    "evidence_coverage_min_ratio": 0.5,
+    "fallback_score": 6.0,
+    "warning_prefix": "[反讨好-L3]"
+  },
+
+  "layer4_pattern": {
+    "_comment": "模式级: 安全评分高但无安全设计文档",
+    "security_score_threshold": 7,
+    "force_reduce_score": 4.0,
+    "required_fields": ["security_design", "security_review"],
+    "warning_prefix": "[反讨好-L4]"
+  },
+
+  "consecutive_tracking": {
+    "_comment": "Layer-4 状态管理: 连续高分追踪(占位符)",
+    "enabled": false,
+    "window_size": 5,
+    "consecutive_threshold": 3
+  }
+}

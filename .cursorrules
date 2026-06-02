@@ -1,0 +1,60 @@
+# BOS-FS Rules
+> Version: v0.1.4
+
+涉及项目优化/README改进/提交材料准备时，加载 BOS-FS Skill 系统。
+
+## Skills
+- `01_goal_refiner` — Goal Refiner (skills/01_goal_refiner.md)
+- `04_outcome_mapper` — Outcome Mapper (skills/04_outcome_mapper.md)
+- `03_readme_refactor` — README Refactor (skills/03_readme_refactor.md)
+- `05_submission_builder` — Submission Builder (skills/05_submission_builder.md)
+- `06_reject_analyzer` — Reject Analyzer (skills/06_reject_analyzer.md)
+- `02_reviewer_simulator` — Reviewer Simulator (skills/02_reviewer_simulator.md)
+- `pipeline` — Pipeline Orchestrator (skills/pipeline.md)
+
+## 流程
+1. Repo → Understand (Goal Refiner)
+2. Understand → Map (Outcome Mapper)
+3. Map → Refactor (README Refactor)
+4. Refactor → Review (Reviewer Simulator)
+5. Review → Build (Submission Builder)
+6. Build → Analyze (Reject Analyzer)
+
+## 核心原则
+- ❌ 不做：伪造成果/用户/数据、夸大能力、规避规则
+- ✅ 做：明确目标、补齐交付、重构描述、对齐评审语言
+- 🔐 信任体系：权威引用 / 行业对标 / 透明度 / 指标可验证
+
+## 评审评分体系
+
+详见 `knowledge/rubrics.md`，四类评审体系：
+
+| 评审类型 | 评分维度 | 通过阈值 |
+|----------|----------|----------|
+| 技术评审 | 架构设计/代码质量/安全性/性能 | ≥ 7.0/10 |
+| 投资评审 | 市场规模/ROI估算/竞品分析/预算合理性 | ≥ 7.0/10 |
+| 产品评审 | 需求匹配/用户体验/功能规划/路线图 | ≥ 7.0/10 |
+| 开源评审 | 社区价值/文档/可维护性/许可证 | ≥ 7.0/10 |
+
+## 相关文件
+- `CHANGELOG.md` — 版本变更记录
+- `SECURITY.md` — 安全策略与漏洞报告
+- `CONTRIBUTING.md` — 贡献指南
+- `knowledge/rubrics.md` — 详细评分标准
+- `knowledge/review_rules/` — 评审规则与扣分标准
+
+## 引擎模块 (Optional Python Backend)
+
+> 核心功能通过 Skill 提示词实现，引擎模块为可选 Python 后端
+
+| 模块 | 路径 | 用途 |
+|------|------|------|
+| Goal Refiner | `engine/core/01_intent_parser/goal_refiner.py` | 目标解析 |
+| Outcome Mapper | `engine/core/02_value_mapper/outcome_mapper.py` | 成果映射 |
+| README Refactor | `engine/core/03_submission_optimizer/readme_refactor.py` | README 重构 |
+| Submission Builder | `engine/core/04_delivery_builder/submission_builder.py` | 提交构建 |
+| Reject Analyzer | `engine/core/05_artifact_generator/reject_analyzer.py` | 拒绝分析 |
+| Reviewer Simulator | `engine/core/06_review_simulator/reviewer_simulator.py` | 评审模拟 |
+
+- 测试: `python -m pytest engine/tests/ -v`
+- 依赖: `pip install -r engine/requirements.txt`
