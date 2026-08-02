@@ -7,7 +7,7 @@
 <p align="center">
 
   <img src="https://img.shields.io/badge/version-v0.3.4-blue" alt="Version" />
-  <img src="https://img.shields.io/badge/license-MIT-green" alt="License" />
+![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)
   <img src="https://img.shields.io/badge/status-Production Ready-brightgreen" alt="Status" />
 </p>
 
@@ -291,3 +291,16 @@ python -m pytest tests/ -v
 <p align="center">
   <sub>Built with ❤️ by <a href="https://github.com/lxcxjxhx">HOS (安全风信子)</a></sub>
 </p>
+
+
+## License (许可证)
+
+本项目采用 **GNU Affero General Public License v3.0 (AGPLv3)**。
+
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+- AGPLv3 是 OSI 认证的强互惠 (strong copyleft) 许可证。
+- 将本项目（或其修改版）作为 SaaS / 云服务对外提供服务时，必须向所有用户公开完整的服务端源码。
+- 商业使用请联系项目维护者获取授权。
+
+向本项目贡献代码即表示你同意 [DCO (Developer Certificate of Origin)](https://developercertificate.org/)，详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
