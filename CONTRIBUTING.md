@@ -1,95 +1,41 @@
-# CONTRIBUTING.md — 贡献指南
+# 贡献指南 (Contributing Guide)
 
-## 如何贡献
+感谢你对本项目的关注与贡献！
 
-BOS-FS 是 Submission Engineering（提交工程）项目，欢迎通过以下方式参与贡献：
+## 许可证 (License)
 
-### 1. 提交 Skills
+本项目采用 **GNU Affero General Public License v3.0 (AGPLv3)**（OSI 认证的强互惠许可证）。
 
-新增 Skill 需遵循以下规范：
+任何对项目的使用、修改与分发都必须遵守 AGPLv3 的条款。特别地，如果你将本项目（或基于它的修改版）通过计算机网络对外提供服务（SaaS / 云服务），你必须向所有用户公开完整的服务端源代码。
 
-1. 在 `skills/<skill-name>/` 目录下创建 `SKILL.md`
-2. 遵循 kebab-case 命名（如 `doc-generator/`）
-3. 必须包含 YAML frontmatter：
-   ```yaml
-   ---
-   name: skill-name
-   description: 一句话描述
-   ---
-   ```
-4. 必须包含的章节：
-   - Role / Purpose
-   - Input Format
-   - Output Schema
-   - Anti-Patterns
-   - Edge Cases
-   - Quality Gates
-5. 在 `skills/manifest.json` 和 `skills-mini/manifest.json` 中注册
-6. 在 `BOS-FS.json` 的 skills 数组中添加条目
-7. 在 `project_manifest.json` 的 files 数组中添加文件条目
+商业使用或希望获得 AGPLv3 之外的授权，请联系项目维护者。
 
-### 2. 贡献知识文件
+## 开发者原产地证书 (DCO)
 
-知识文件按五层架构组织：
+本项目采用 **Developer Certificate of Origin (DCO)** 机制（而非 CLA）。
 
-| 层级 | 目录 | 内容 |
-|------|------|------|
-| Intent | `knowledge/intent/` | 持续发现框架、产品价值框架 |
-| Runtime | `knowledge/runtime/` | 架构模式 |
-| Execution | `knowledge/execution/templates/` | README/Pitch/Demo/Checklist 模板 |
-| Governance | `knowledge/governance/` | 评分标准、信任框架、评审规则 |
-| Adoption | `knowledge/adoption/` | 差异化、团队拓扑、流指标 |
+在提交代码之前，请确认你同意 [Developer Certificate of Origin](https://developercertificate.org/) 的条款：
 
-知识文件要求：
-- 每章提炼 ≤30 行核心要点
-- 冗余检测：与现有内容相似度 >80% 需合并
-- 标注来源书籍/框架
+> By making a contribution to this project, I certify that:
+> (a) The contribution was created in whole or in part by me and I have the right to submit it under the open source license indicated in the file; or
+> (b) The contribution is based upon previous work that, to the best of my knowledge, is covered under an appropriate open source license and I have the right under that license to submit that work with modifications; or
+> (c) The contribution was provided directly to me by some other person who certified (a) or (b) and I have not modified it.
+> (d) I understand and agree that this project and the contribution are public and that a record of the contribution (including all personal information I submit with it) is maintained indefinitely and may be redistributed consistent with this project or the open source license(s) involved.
 
-### 3. 报告问题
+### 如何签名 (How to sign off)
 
-通过以下方式报告问题：
+每个提交信息中必须包含 `Signed-off-by` 行，格式为：
 
-- **Bug 报告**：描述复现步骤、预期行为、实际行为
-- **功能建议**：说明使用场景和期望效果
-- **文档问题**：指出错误路径、过时内容、格式问题
+```
+Signed-off-by: 你的名字 <你的邮箱>
+```
 
-### 4. 编码标准
+最简单的方式是提交时加上 `-s` 参数：
 
-#### Python 引擎
-- 遵循 PEP 8 风格
-- 所有引擎模块必须有对应测试
-- 测试覆盖率要求：新增代码 ≥90%
-- 运行测试：`cd engine && python -m pytest tests/ -v`
+```bash
+git commit -s
+```
 
-#### Markdown 文档
-- 使用语义化标题（# → ## → ###）
-- 代码块标注语言类型
-- 路径引用使用相对路径
-- 版本标签统一格式：`v0.x.x`
+Git 会自动追加 `Signed-off-by` 行。CI 会检查每个 PR 的所有提交是否都包含签名，未签名的 PR 将无法合并。
 
-#### Skill 文件
-- 目录名：kebab-case（如 `goal-refiner/`）
-- 文件名：固定为 `SKILL.md`
-- YAML frontmatter 的 `name` 字段：kebab-case
-- 约束分级：MUST（必须）/ SHOULD（应该）/ MAY（可以）
-
-### 5. 版本规范
-
-- 语义化版本：MAJOR.MINOR.PATCH
-- 每次变更同步更新：
-  - `BOS-FS.json` version
-  - `skills/manifest.json` version
-  - `skills-mini/manifest.json` version
-  - `project_manifest.json` version
-  - `.cursorrules` version
-  - `.trae/skills/bos-fs/SKILL.md` version
-  - `README.md` badge
-- 在 CHANGELOG.md 中添加新版本记录
-
-### 6. Pull Request 流程
-
-1. 创建特性分支（`feat/skill-name` 或 `fix/path-error`）
-2. 遵循上述编码标准
-3. 更新所有相关 manifest 和版本文件
-4. 运行测试确保通过
-5. 提交 PR，说明变更内容和影响范围
+> 注意：请使用与你的 GitHub 账号关联的邮箱进行签名。
